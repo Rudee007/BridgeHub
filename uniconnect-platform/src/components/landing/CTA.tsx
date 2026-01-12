@@ -1,6 +1,6 @@
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { FadeIn } from '../react-bits/FadeIn';
-import { motion } from 'framer-motion';
+import { Button } from '../ui/Button';  // ✅ Import Button
 
 export const CTA = () => {
   return (
@@ -20,21 +20,21 @@ export const CTA = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="btn btn-primary text-lg px-10 py-4 flex items-center gap-2 justify-center"
+                <Button
+                  variant="primary"
+                  size="lg"
+                  icon={<ArrowRight size={20} />}
+                  iconPosition="right"
                 >
                   Get Started Free
-                  <ArrowRight size={20} />
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="btn btn-outline text-lg px-10 py-4"
+                </Button>
+                
+                <Button
+                  variant="secondary"
+                  size="lg"
                 >
                   Schedule a Demo
-                </motion.button>
+                </Button>
               </div>
 
               <div className="flex items-center justify-center gap-2 text-sm text-gray-500">

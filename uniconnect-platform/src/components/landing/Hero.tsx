@@ -4,9 +4,13 @@ import { ArrowRight, Building2, GraduationCap, ChevronDown } from 'lucide-react'
 import { NetworkVisualization } from '../ui/NetworkVisualization';
 import { AnimatedWord } from '../ui/AnimatedText';
 import { MagneticButton } from '../ui/MagneticButton';
+import { RippleButton } from '../ui/RippleButton';
+import { useMouseGradient } from '@/hooks/useMouseGradient';
 
 export const Hero = () => {
   const sectionRef = useRef(null);
+  const mousePosition = useMouseGradient();
+  
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end start'],
@@ -20,17 +24,29 @@ export const Hero = () => {
   const springOpacity = useSpring(opacity, { stiffness: 100, damping: 30 });
   const springY = useSpring(y, { stiffness: 100, damping: 30 });
 
-  const headlineWords = ['Where', 'Industry', 'Meets', 'Academia', '—', 'At', 'Scale.'];
+  const headlineWords = ['Bridge', 'the', 'Gap', 'Between', 'Talent', '&', 'Opportunity'];
 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      className="relative hero-height flex items-center justify-center overflow-hidden pt-16 sm:pt-20"
     >
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-blue-50/30 to-violet-50/30">
+      {/* Mouse-following gradient background */}
+      <div 
+        className="absolute inset-0 transition-all duration-1000 ease-out"
+        style={{
+          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, 
+            rgba(139, 92, 246, 0.12) 0%, 
+            rgba(99, 102, 241, 0.08) 25%, 
+            rgba(59, 130, 246, 0.04) 50%, 
+            transparent 70%)`,
+        }}
+      />
+
+      {/* Static gradient base - Light purple/lavender */}
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-50/80 via-indigo-50/60 to-blue-50/50">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-b from-secondary/5 via-transparent to-transparent"
+          className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-transparent"
           style={{ opacity: springOpacity }}
         />
       </div>
@@ -40,9 +56,9 @@ export const Hero = () => {
         <NetworkVisualization />
       </div>
 
-      {/* Floating Gradient Orbs */}
+      {/* Floating Gradient Orbs - Purple tones */}
       <motion.div
-        className="absolute top-20 left-20 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl"
+        className="hidden md:block absolute top-20 left-20 w-96 h-96 bg-violet-400/12 rounded-full blur-3xl"
         animate={{
           scale: [1, 1.2, 1],
           x: [0, 50, 0],
@@ -51,7 +67,7 @@ export const Hero = () => {
         transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
-        className="absolute bottom-20 right-20 w-[32rem] h-[32rem] bg-secondary-500/10 rounded-full blur-3xl"
+        className="hidden md:block absolute bottom-20 right-20 w-[32rem] h-[32rem] bg-indigo-400/10 rounded-full blur-3xl"
         animate={{
           scale: [1, 1.3, 1],
           x: [0, -40, 0],
@@ -62,23 +78,23 @@ export const Hero = () => {
 
       {/* Content */}
       <motion.div
-        className="relative z-10 container max-w-7xl mx-auto px-6 lg:px-8 py-20"
+        className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20"
         style={{ scale: springScale, y: springY }}
       >
-        <div className="max-w-5xl mx-auto text-center">
-          {/* Badge */}
+        <div className="max-w-6xl mx-auto text-center">
+          {/* Badge - Golden ratio spacing */}
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary-200 mb-8 shadow-lg"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-violet-200/50 mb-10 shadow-sm"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
             <motion.span
-              className="text-sm font-medium text-primary-700"
+              className="text-sm font-semibold text-indigo-700"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
@@ -87,92 +103,111 @@ export const Hero = () => {
             </motion.span>
           </motion.div>
 
-          {/* Headline with Word Animation */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-extrabold mb-8 leading-tight">
-            {headlineWords.map((word, index) => (
-              <AnimatedWord
-                key={index}
-                word={word}
-                index={index}
-                isHighlight={word === 'Academia'}
-              />
-            ))}
+          {/* Headline - Golden Ratio Typography (base × 1.618) */}
+          <h1 className="font-display font-black mb-8 leading-[1.1] tracking-tight text-gray-900">
+            <span className="block text-[2.5rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.8rem] xl:text-[6.5rem]">
+              {headlineWords.map((word, index) => (
+                <AnimatedWord
+                  key={index}
+                  word={word}
+                  index={index}
+                  isHighlight={false}
+                />
+              ))}
+            </span>
           </h1>
 
-          {/* Subheadline */}
+          {/* Subheadline - Golden ratio smaller (headline / 1.618²) */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9, ease: [0.215, 0.61, 0.355, 1] }}
-            className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto mb-12 leading-relaxed"
+            className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] text-gray-600 max-w-4xl mx-auto mb-10 leading-relaxed font-medium px-4"
           >
-            One platform for companies to launch real projects and hire talent,
-            while universities manage students with full academic control.
           </motion.p>
 
-          {/* CTAs with Magnetic Effect */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1, ease: [0.215, 0.61, 0.355, 1] }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
-          >
-            <MagneticButton strength={0.15}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-xl font-semibold text-lg flex items-center gap-2 shadow-xl hover:shadow-glow-primary transition-all duration-300 min-w-[240px] justify-center"
-              >
-                <Building2 size={20} />
-                Partner as a Company
-                <motion.span
-                  className="inline-block"
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <ArrowRight size={20} />
-                </motion.span>
-              </motion.button>
-            </MagneticButton>
-
-            <MagneticButton strength={0.15}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group px-8 py-4 bg-white text-gray-700 rounded-xl font-semibold text-lg border-2 border-gray-200 hover:border-primary-600 hover:text-primary-600 transition-all duration-300 min-w-[240px] flex items-center gap-2 justify-center shadow-lg"
-              >
-                <GraduationCap size={20} />
-                Join as a University
-                <motion.span
-                  className="inline-block opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <ArrowRight size={20} />
-                </motion.span>
-              </motion.button>
-            </MagneticButton>
-          </motion.div>
-
-          {/* Trust Indicators */}
+          {/* Value propositions - Golden ratio spacing (40px ≈ base × φ) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.4 }}
-            className="pt-8 border-t border-gray-200/50"
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 mb-12 text-base sm:text-lg text-gray-700 px-4"
           >
-            <p className="text-sm text-gray-500 mb-6 font-medium">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.3 }}
+              className="flex items-center gap-2.5"
+            >
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-800" />
+              <span className="font-medium">Real Projects: Build portfolios with actual work</span>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.4 }}
+              className="flex items-center gap-2.5"
+            >
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-800" />
+              <span className="font-medium">Job Placements: Direct path to full-time roles</span>
+            </motion.div>
+          </motion.div>
+
+          {/* CTAs - Golden ratio button sizing */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.5, ease: [0.215, 0.61, 0.355, 1] }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 sm:mb-20 px-4"
+          >
+            <MagneticButton strength={0.15}>
+              <RippleButton
+                variant="primary"
+                className="group relative w-full sm:w-auto px-8 py-4 text-base sm:text-lg font-semibold flex items-center justify-center gap-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 min-w-[240px]"
+              >
+                <Building2 size={20} />
+                Post Projects & Hire
+                <ArrowRight 
+                  size={20} 
+                  className="group-hover:translate-x-1 transition-transform" 
+                />
+              </RippleButton>
+            </MagneticButton>
+
+            <MagneticButton strength={0.15}>
+              <RippleButton
+                variant="secondary"
+                className="w-full sm:w-auto px-8 py-4 text-base sm:text-lg font-semibold flex items-center justify-center gap-3 bg-white/80 backdrop-blur-sm text-gray-900 rounded-xl border-2 border-gray-300 hover:border-gray-400 hover:bg-white shadow-md hover:shadow-lg transition-all duration-300 min-w-[240px]"
+              >
+                <GraduationCap size={20} />
+                Join as University
+              </RippleButton>
+            </MagneticButton>
+          </motion.div>
+
+          {/* Trust Indicators - Golden ratio spacing */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.7 }}
+            className="pt-10 border-t border-gray-200/60"
+          >
+            <p className="text-xs sm:text-sm text-gray-500 mb-6 font-medium uppercase tracking-wider">
               Partnering with leading institutions
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-8">
-              {['University A', 'Tech Corp', 'Global Inc', 'Innovation Labs'].map((name, i) => (
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+              {['MIT', 'Stanford', 'Google', 'Microsoft'].map((name, i) => (
                 <motion.div
                   key={name}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 0.4, y: 0 }}
-                  whileHover={{ opacity: 1, scale: 1.1 }}
-                  transition={{ delay: 1.5 + i * 0.1, duration: 0.5 }}
-                  className="flex items-center justify-center px-6 py-3 bg-white/50 backdrop-blur-sm rounded-lg border border-gray-200/50 grayscale hover:grayscale-0 transition-all cursor-pointer shadow-sm"
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ scale: 1.05, opacity: 1 }}
+                  transition={{ delay: 1.8 + i * 0.1, duration: 0.5 }}
+                  className="flex items-center justify-center px-6 py-3 bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200/60 hover:border-gray-300 hover:bg-white/80 transition-all cursor-pointer shadow-sm"
                 >
-                  <span className="text-sm font-semibold text-gray-700">{name}</span>
+                  <span className="text-sm sm:text-base font-bold text-gray-700">
+                    {name}
+                  </span>
                 </motion.div>
               ))}
             </div>
@@ -185,22 +220,15 @@ export const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+        className="hidden lg:block absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
       >
         <motion.div
           className="flex flex-col items-center gap-2 cursor-pointer"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <span className="text-xs text-gray-500 font-medium">Scroll to explore</span>
-          <div className="w-6 h-10 rounded-full border-2 border-gray-300 flex items-start justify-center p-2">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-1.5 bg-gray-400 rounded-full"
-            />
-          </div>
-          <ChevronDown className="text-gray-400 animate-bounce" size={20} />
+          <span className="text-xs text-gray-400 font-medium uppercase tracking-wide">Scroll</span>
+          <ChevronDown className="text-gray-400" size={18} />
         </motion.div>
       </motion.div>
     </section>
