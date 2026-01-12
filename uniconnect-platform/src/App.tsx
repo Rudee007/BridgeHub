@@ -5,6 +5,7 @@ import { Testimonials } from './components/landing/Testimonials';
 import { CTA } from './components/landing/CTA';
 import { Footer } from './components/landing/Footer';
 import { StatsAndTrust } from './components/landing/StatsAndTrust';  // ✅ New combined component
+import { ProblemSolution } from './components/landing/ProblemSolution'; // ✅ NEW
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Navbar />
       <Hero />
       <StatsAndTrust />  {/* ✅ Combined TrustBar + Stats */}
-      <Features />
+      <ProblemSolution /> {/* ✅ NEW SECTION */}
+
       
       {/* <Stats /> */}
       <Testimonials />

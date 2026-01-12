@@ -1,28 +1,31 @@
 import { motion } from 'framer-motion';
 import { CountUp } from '../react-bits/CountUp';
 import { FadeIn } from '../react-bits/FadeIn';
+import { ScrollVelocity } from '../react-bits/ScrollVelocity';
+import { CompanyLogo } from '../ui/CompanyLogo';
 
 const stats = [
-  { value: 8, suffix: 'M+', label: 'Matches Made', description: 'Successful project completions' },
-  { value: 150, suffix: 'K+', label: 'Tech Jobs', description: 'Students placed in top companies' },
-  { value: 10, suffix: 'M+', label: 'Startup Ready Candidates', description: 'Industry-ready graduates' },
+  { value: 4, suffix: 'M+', label: 'Matches Made', description: 'Successful project completions' },
+  { value: 10, suffix: 'K+', label: 'Tech Jobs', description: 'Students placed in top companies' },
+  { value: 5, suffix: 'M+', label: 'Startup Ready Candidates', description: 'Industry-ready graduates' },
 ];
 
 const logos = [
-  { name: 'Plaid', width: 'w-24' },
-  { name: 'Airtable', width: 'w-28' },
-  { name: 'NerdWallet', width: 'w-32' },
-  { name: 'Consensys', width: 'w-24' },
-  { name: 'Cruise', width: 'w-24' },
-  { name: 'DoorDash', width: 'w-28' },
-  { name: 'Roblox', width: 'w-28' },
-  { name: 'Honey', width: 'w-24' },
+  { name: 'Stripe', width: 'w-28' },
+  { name: 'Notion', width: 'w-28' },
+  { name: 'Vercel', width: 'w-28' },
+  { name: 'Figma', width: 'w-24' },
+  { name: 'Linear', width: 'w-28' },
+  { name: 'Slack', width: 'w-24' },
+  { name: 'Discord', width: 'w-28' },
+  { name: 'Github', width: 'w-28' },
+  { name: 'Airbnb', width: 'w-28' },
+  { name: 'Uber', width: 'w-24' },
+  { name: 'Dropbox', width: 'w-28' },
+  { name: 'Zoom', width: 'w-24' },
 ];
 
 export const StatsAndTrust = () => {
-  // Duplicate logos for seamless infinite scroll
-  const duplicatedLogos = [...logos, ...logos, ...logos];
-
   return (
     <section className="relative py-20 md:py-32 bg-gray-900 overflow-hidden">
       {/* Background Decorative Elements */}
@@ -47,7 +50,7 @@ export const StatsAndTrust = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 1 }}
               className="inline-block"
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
@@ -71,19 +74,16 @@ export const StatsAndTrust = () => {
                 whileHover={{ scale: 1.05, y: -5 }}
                 className="text-center group cursor-default"
               >
-                {/* Large Number */}
                 <div className="mb-4">
                   <span className="text-6xl md:text-7xl lg:text-8xl font-bold font-display bg-gradient-to-br from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
-                    <CountUp end={stat.value} duration={2.5} suffix={stat.suffix} />
+                    <CountUp end={stat.value} duration={1} suffix={stat.suffix} />
                   </span>
                 </div>
                 
-                {/* Label */}
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-primary-400 transition-colors">
                   {stat.label}
                 </h3>
                 
-                {/* Description */}
                 <p className="text-sm md:text-base text-gray-400">
                   {stat.description}
                 </p>
@@ -106,45 +106,38 @@ export const StatsAndTrust = () => {
           </div>
         </FadeIn>
 
-        {/* Infinite Logo Carousel */}
+        {/* ✅ ScrollVelocity - Working Version */}
         <FadeIn delay={0.5}>
           <div className="relative">
             {/* Gradient Fade Edges */}
             <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-900 to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-900 to-transparent z-10 pointer-events-none" />
             
-            <div className="overflow-hidden">
-              <motion.div
-                animate={{
-                  x: ['0%', '-33.333%'],
-                }}
-                transition={{
-                  x: {
-                    repeat: Infinity,
-                    repeatType: "loop",
-                    duration: 25,
-                    ease: "linear",
-                  },
-                }}
-                className="flex gap-12 md:gap-16"
-              >
-                {duplicatedLogos.map((logo, index) => (
-                  <motion.div
-                    key={index}
-                    whileHover={{ scale: 1.1, filter: 'grayscale(0%)' }}
-                    className="flex-shrink-0 grayscale opacity-50 hover:opacity-100 transition-all duration-300 cursor-pointer"
-                  >
-                    <div className={`h-16 ${logo.width} flex items-center justify-center`}>
-                      <div className="px-6 py-3 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all">
-                        <span className="text-white font-semibold text-base md:text-lg whitespace-nowrap">
-                          {logo.name}
-                        </span>
-                      </div>
+            {/* ScrollVelocity Component - Fixed & Working */}
+            <ScrollVelocity baseVelocity={-5}>
+              {logos.map((logo, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{ scale: 1.1, opacity: 1 }}
+                  className="flex-shrink-0 opacity-60 hover:opacity-100 transition-all duration-300 cursor-pointer"
+                >
+                  <div className="flex flex-col items-center gap-3 px-4">
+                    {/* Logo Icon */}
+                    <div className={`h-12 ${logo.width} flex items-center justify-center`}>
+                      <CompanyLogo 
+                        name={logo.name} 
+                        className="w-full h-full text-white"
+                      />
                     </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
+                    
+                    {/* Company Name */}
+                    <span className="text-xs font-medium text-gray-400 whitespace-nowrap">
+                      {logo.name}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </ScrollVelocity>
           </div>
         </FadeIn>
       </div>
