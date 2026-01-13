@@ -18,7 +18,15 @@ const solutions = [
 
 export const ProblemSolution = () => {
   return (
-    <section className="relative py-20 md:py-32 bg-gray-100 overflow-hidden">
+    <section className="relative py-20 md:py-32 bg-white overflow-hidden">
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.015]">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, rgb(0 0 0) 1px, transparent 0)`,
+          backgroundSize: '32px 32px'
+        }} />
+      </div>
+
       <div className="container-custom relative z-10">
         {/* Clean Header */}
         <FadeIn>
@@ -42,7 +50,7 @@ export const ProblemSolution = () => {
                 transition={{ duration: 0.2 }}
                 className="relative"
               >
-                <div className="bg-white rounded-3xl p-8 md:p-10 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div className="bg-[#faf8f5] rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                   {/* Header */}
                   <div className="flex items-center gap-3 mb-8">
                     <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center flex-shrink-0">
@@ -77,7 +85,7 @@ export const ProblemSolution = () => {
               </motion.div>
             </FadeIn>
 
-            {/* Animated Gradient Curve with Moving Dot */}
+            {/* Animated Gradient Curve - Updated Brand Colors */}
             <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
               <motion.svg
                 width="150"
@@ -89,14 +97,11 @@ export const ProblemSolution = () => {
                 transition={{ delay: 0.3, duration: 0.8 }}
               >
                 <defs>
-                  {/* Gradient Definition - Blue to Green */}
                   <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#60a5fa" /> {/* Blue-400 */}
-                    <stop offset="50%" stopColor="#34d399" /> {/* Emerald-400 */}
-                    <stop offset="100%" stopColor="#10b981" /> {/* Green-500 */}
+                    <stop offset="0%" stopColor="#3B82F6" /> {/* blue-500 */}
+                    <stop offset="100%" stopColor="#8B5CF6" /> {/* violet-500 */}
                   </linearGradient>
 
-                  {/* Glow Filter for Dot */}
                   <filter id="dotGlow">
                     <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
                     <feMerge>
@@ -106,7 +111,6 @@ export const ProblemSolution = () => {
                   </filter>
                 </defs>
 
-                {/* Gradient Curve Path */}
                 <motion.path
                   id="curvePath"
                   d="M 10 40 Q 75 15, 140 40"
@@ -120,10 +124,9 @@ export const ProblemSolution = () => {
                   transition={{ delay: 0.5, duration: 1.2, ease: "easeInOut" }}
                 />
 
-                {/* Animated Dot Moving Along Path */}
                 <motion.circle
                   r="5"
-                  fill="#10b981"
+                  fill="#8B5CF6"
                   filter="url(#dotGlow)"
                   initial={{ offsetDistance: "0%", opacity: 0 }}
                   animate={{ 
@@ -150,7 +153,7 @@ export const ProblemSolution = () => {
                 transition={{ duration: 0.2 }}
                 className="relative"
               >
-                <div className="bg-white rounded-3xl p-8 md:p-10 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div className="bg-[#faf8f5] rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                   {/* Header */}
                   <div className="flex items-center gap-3 mb-8">
                     <div className="w-11 h-11 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0">

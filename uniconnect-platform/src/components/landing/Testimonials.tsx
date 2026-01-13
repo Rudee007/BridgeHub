@@ -109,7 +109,7 @@ export const Testimonials = () => {
                 onClick={handlePrev}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-14 h-14 rounded-2xl bg-[#faf8f5] border border-gray-200 flex items-center justify-center hover:border-gray-300 hover:shadow-md transition-all duration-300 group"
+                className="w-14 h-14 rounded-2xl bg-[#FCF4F6] border border-pink-100 flex items-center justify-center hover:border-pink-200 hover:shadow-md transition-all duration-300 group"
                 aria-label="Previous testimonial"
               >
                 <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-gray-900" />
@@ -118,7 +118,7 @@ export const Testimonials = () => {
                 onClick={handleNext}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-14 h-14 rounded-2xl bg-[#faf8f5] border border-gray-200 flex items-center justify-center hover:border-gray-300 hover:shadow-md transition-all duration-300 group"
+                className="w-14 h-14 rounded-2xl bg-[#FCF4F6] border border-pink-100 flex items-center justify-center hover:border-pink-200 hover:shadow-md transition-all duration-300 group"
                 aria-label="Next testimonial"
               >
                 <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-gray-900" />
@@ -159,7 +159,7 @@ export const Testimonials = () => {
                     }}
                     layout
                   >
-                    <div className="relative bg-[#faf8f5] rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:bg-white transition-all duration-300 h-full flex flex-col group">
+                    <div className="relative bg-[#FCF4F6] rounded-3xl p-8 shadow-sm border border-pink-100/50 hover:shadow-xl hover:border-pink-200 transition-all duration-300 h-full flex flex-col group">
                       {/* Quote Icon */}
                       <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-100 via-secondary-100 to-primary-50 flex items-center justify-center mb-6 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                         <Quote className="w-7 h-7 text-primary-600 fill-primary-600" />
@@ -171,7 +171,7 @@ export const Testimonials = () => {
                       </blockquote>
 
                       {/* Author Info */}
-                      <div className="pt-4 border-t border-gray-100">
+                      <div className="pt-4 border-t border-pink-100">
                         <p className="font-semibold text-gray-900 mb-1">
                           {testimonial.author}
                         </p>
@@ -216,14 +216,14 @@ export const Testimonials = () => {
                     }}
                     layout
                   >
-                    <div className="relative bg-[#faf8f5] rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:bg-white transition-all duration-300 h-full flex flex-col group">
+                    <div className="relative bg-[#FCF4F6] rounded-3xl p-8 shadow-sm border border-pink-100/50 hover:shadow-xl hover:border-pink-200 transition-all duration-300 h-full flex flex-col group">
                       <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-100 via-secondary-100 to-primary-50 flex items-center justify-center mb-6 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                         <Quote className="w-7 h-7 text-primary-600 fill-primary-600" />
                       </div>
                       <blockquote className="text-gray-700 text-base leading-relaxed mb-6 flex-grow">
                         "{testimonial.quote}"
                       </blockquote>
-                      <div className="pt-4 border-t border-gray-100">
+                      <div className="pt-4 border-t border-pink-100">
                         <p className="font-semibold text-gray-900 mb-1">
                           {testimonial.author}
                         </p>
@@ -260,14 +260,14 @@ export const Testimonials = () => {
                   },
                 }}
               >
-                <div className="relative bg-[#faf8f5] rounded-3xl p-8 shadow-sm border border-gray-100 h-full flex flex-col">
+                <div className="relative bg-[#FCF4F6] rounded-3xl p-8 shadow-sm border border-pink-100/50 h-full flex flex-col">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-100 via-secondary-100 to-primary-50 flex items-center justify-center mb-6 flex-shrink-0">
                     <Quote className="w-7 h-7 text-primary-600 fill-primary-600" />
                   </div>
                   <blockquote className="text-gray-700 text-base leading-relaxed mb-6 flex-grow">
                     "{testimonials[currentIndex].quote}"
                   </blockquote>
-                  <div className="pt-4 border-t border-gray-100">
+                  <div className="pt-4 border-t border-pink-100">
                     <p className="font-semibold text-gray-900 mb-1">
                       {testimonials[currentIndex].author}
                     </p>
@@ -285,7 +285,7 @@ export const Testimonials = () => {
             <motion.button
               onClick={handlePrev}
               whileTap={{ scale: 0.95 }}
-              className="w-12 h-12 rounded-xl bg-[#faf8f5] border border-gray-200 flex items-center justify-center active:bg-gray-50"
+              className="w-12 h-12 rounded-xl bg-[#FCF4F6] border border-pink-100 flex items-center justify-center active:bg-pink-50"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="w-5 h-5 text-gray-700" />
@@ -293,7 +293,7 @@ export const Testimonials = () => {
             <motion.button
               onClick={handleNext}
               whileTap={{ scale: 0.95 }}
-              className="w-12 h-12 rounded-xl bg-[#faf8f5] border border-gray-200 flex items-center justify-center active:bg-gray-50"
+              className="w-12 h-12 rounded-xl bg-[#FCF4F6] border border-pink-100 flex items-center justify-center active:bg-pink-50"
               aria-label="Next testimonial"
             >
               <ChevronRight className="w-5 h-5 text-gray-700" />
