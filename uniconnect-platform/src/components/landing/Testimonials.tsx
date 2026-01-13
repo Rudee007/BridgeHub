@@ -81,9 +81,15 @@ export const Testimonials = () => {
   };
 
   return (
-    <section id="testimonials" className="relative py-20 md:py-32 bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-hidden">
+    <section 
+      id="testimonials" 
+      className="relative py-20 md:py-32 overflow-hidden border-t border-gray-200"
+      style={{
+        background: 'linear-gradient(180deg, #F6F7FB 0%, #FFFFFF 100%)'
+      }}
+    >
       {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
+      <div className="absolute inset-0 opacity-[0.015]">
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle at 2px 2px, rgb(0 0 0) 1px, transparent 0)`,
           backgroundSize: '32px 32px'

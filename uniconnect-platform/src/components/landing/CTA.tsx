@@ -1,10 +1,10 @@
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { FadeIn } from '../react-bits/FadeIn';
-import { Button } from '../ui/Button';  // ✅ Import Button
+import { Button } from '../ui/Button';
 
 export const CTA = () => {
   return (
-    <section className="section-spacing bg-white relative overflow-hidden">
+    <section className="section-spacing bg-white relative overflow-hidden border-t border-gray-200">
       <div className="absolute inset-0 bg-animated-gradient opacity-5" />
       
       <div className="container-custom relative z-10">

@@ -28,16 +28,16 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           
-          {/* Logo */}
+          {/* Logo - Simplified */}
           <motion.a
             href="/"
             whileHover={{ scale: 1.02 }}
-            className="flex items-center gap-2 sm:gap-3 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer"
           >
-            <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-600 to-primary-700 rounded-lg sm:rounded-xl flex items-center justify-center shadow-sm">
-              <span className="text-white font-bold text-lg sm:text-xl">B</span>
+            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-base">B</span>
             </div>
-            <span className="text-xl sm:text-2xl font-bold text-gray-900">
+            <span className="text-xl font-bold text-gray-900">
               BridgeHub
             </span>
           </motion.a>

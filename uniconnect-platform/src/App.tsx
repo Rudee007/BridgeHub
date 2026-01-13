@@ -1,6 +1,5 @@
 import { Navbar } from './components/landing/Navbar';
 import { Hero } from './components/landing/Hero';
-import { Features } from './components/landing/Features';
 import { Testimonials } from './components/landing/Testimonials';
 import { CTA } from './components/landing/CTA';
 import { Footer } from './components/landing/Footer';
@@ -12,11 +11,8 @@ function App() {
     <div className="overflow-x-hidden">
       <Navbar />
       <Hero />
-      <StatsAndTrust />  {/* ✅ Combined TrustBar + Stats */}
-      <ProblemSolution /> {/* ✅ NEW SECTION */}
-
-      
-      {/* <Stats /> */}
+      <StatsAndTrust /> 
+      <ProblemSolution />
       <Testimonials />
       <CTA />
       <Footer />

@@ -11,7 +11,7 @@ interface FadeInProps {
 export const FadeIn = ({ 
   children, 
   delay = 0, 
-  duration = 0.5,
+  duration = 0.9,
   direction = 'up' 
 }: FadeInProps) => {
   const directions = {

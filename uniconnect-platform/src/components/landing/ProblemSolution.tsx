@@ -18,7 +18,7 @@ const solutions = [
 
 export const ProblemSolution = () => {
   return (
-    <section className="relative py-20 md:py-32 bg-white overflow-hidden">
+    <section className="relative py-20 md:py-32 bg-[#F6F7FB] overflow-hidden">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-[0.015]">
         <div className="absolute inset-0" style={{
@@ -50,7 +50,7 @@ export const ProblemSolution = () => {
                 transition={{ duration: 0.2 }}
                 className="relative"
               >
-                <div className="bg-[#faf8f5] rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                   {/* Header */}
                   <div className="flex items-center gap-3 mb-8">
                     <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center flex-shrink-0">
@@ -85,7 +85,7 @@ export const ProblemSolution = () => {
               </motion.div>
             </FadeIn>
 
-            {/* Animated Gradient Curve - Updated Brand Colors */}
+            {/* Animated Gradient Curve */}
             <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
               <motion.svg
                 width="150"
@@ -98,8 +98,8 @@ export const ProblemSolution = () => {
               >
                 <defs>
                   <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#3B82F6" /> {/* blue-500 */}
-                    <stop offset="100%" stopColor="#8B5CF6" /> {/* violet-500 */}
+                    <stop offset="0%" stopColor="#3B82F6" />
+                    <stop offset="100%" stopColor="#8B5CF6" />
                   </linearGradient>
 
                   <filter id="dotGlow">
@@ -153,7 +153,7 @@ export const ProblemSolution = () => {
                 transition={{ duration: 0.2 }}
                 className="relative"
               >
-                <div className="bg-[#faf8f5] rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                   {/* Header */}
                   <div className="flex items-center gap-3 mb-8">
                     <div className="w-11 h-11 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0">

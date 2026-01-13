@@ -27,8 +27,8 @@ export const Hero = () => {
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
     >
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-blue-50/30 to-violet-50/30">
+      {/* Background - Consistent Soft Blush */}
+      <div className="absolute inset-0 bg-[#FCF4F6]">
         <motion.div
           className="absolute inset-0 bg-gradient-to-b from-secondary/5 via-transparent to-transparent"
           style={{ opacity: springOpacity }}
@@ -71,7 +71,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary-200 mb-8 shadow-lg"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-primary-200 mb-8 shadow-lg"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
@@ -170,7 +170,7 @@ export const Hero = () => {
                   animate={{ opacity: 0.4, y: 0 }}
                   whileHover={{ opacity: 1, scale: 1.1 }}
                   transition={{ delay: 1.5 + i * 0.1, duration: 0.5 }}
-                  className="flex items-center justify-center px-6 py-3 bg-white/50 backdrop-blur-sm rounded-lg border border-gray-200/50 grayscale hover:grayscale-0 transition-all cursor-pointer shadow-sm"
+                  className="flex items-center justify-center px-6 py-3 bg-white/70 backdrop-blur-sm rounded-lg border border-gray-200/50 grayscale hover:grayscale-0 transition-all cursor-pointer shadow-sm"
                 >
                   <span className="text-sm font-semibold text-gray-700">{name}</span>
                 </motion.div>
