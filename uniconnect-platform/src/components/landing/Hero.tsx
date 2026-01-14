@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom'; // ✅ ADD THIS IMPORT
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight, Building2, GraduationCap, ChevronDown } from 'lucide-react';
 import { NetworkVisualization } from '../ui/NetworkVisualization';
@@ -110,46 +111,52 @@ export const Hero = () => {
             while universities manage students with full academic control.
           </motion.p>
 
-          {/* CTAs with Magnetic Effect */}
+          {/* CTAs with Magnetic Effect + NAVIGATION ✅ */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.1, ease: [0.215, 0.61, 0.355, 1] }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
           >
-            <MagneticButton strength={0.15}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-xl font-semibold text-lg flex items-center gap-2 shadow-xl hover:shadow-glow-primary transition-all duration-300 min-w-[240px] justify-center"
-              >
-                <Building2 size={20} />
-                Partner as a Company
-                <motion.span
-                  className="inline-block"
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
+            {/* ✅ FOR COMPANIES BUTTON - Navigates to /for-companies */}
+            <Link to="/for-companies">
+              <MagneticButton strength={0.15}>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-xl font-semibold text-lg flex items-center gap-2 shadow-xl hover:shadow-glow-primary transition-all duration-300 min-w-[240px] justify-center"
                 >
-                  <ArrowRight size={20} />
-                </motion.span>
-              </motion.button>
-            </MagneticButton>
+                  <Building2 size={20} />
+                  Partner as a Company
+                  <motion.span
+                    className="inline-block"
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <ArrowRight size={20} />
+                  </motion.span>
+                </motion.button>
+              </MagneticButton>
+            </Link>
 
-            <MagneticButton strength={0.15}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group px-8 py-4 bg-white text-gray-700 rounded-xl font-semibold text-lg border-2 border-gray-200 hover:border-primary-600 hover:text-primary-600 transition-all duration-300 min-w-[240px] flex items-center gap-2 justify-center shadow-lg"
-              >
-                <GraduationCap size={20} />
-                Join as a University
-                <motion.span
-                  className="inline-block opacity-0 group-hover:opacity-100 transition-opacity"
+            {/* ✅ FOR UNIVERSITIES BUTTON - Navigates to /for-universities */}
+            <Link to="/for-universities">
+              <MagneticButton strength={0.15}>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group px-8 py-4 bg-white text-gray-700 rounded-xl font-semibold text-lg border-2 border-gray-200 hover:border-primary-600 hover:text-primary-600 transition-all duration-300 min-w-[240px] flex items-center gap-2 justify-center shadow-lg"
                 >
-                  <ArrowRight size={20} />
-                </motion.span>
-              </motion.button>
-            </MagneticButton>
+                  <GraduationCap size={20} />
+                  Join as a University
+                  <motion.span
+                    className="inline-block opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <ArrowRight size={20} />
+                  </motion.span>
+                </motion.button>
+              </MagneticButton>
+            </Link>
           </motion.div>
 
           {/* Trust Indicators */}
