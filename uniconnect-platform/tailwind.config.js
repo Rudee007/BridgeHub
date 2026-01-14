@@ -78,6 +78,38 @@ export default {
           foreground: '#ffffff',
         },
         
+        // ✨ NEW: Pink/Fuchsia Palette (For Stats & Landing Page)
+        pink: {
+          50: '#fdf4ff',
+          100: '#fae8ff',
+          200: '#f5d0fe',
+          300: '#f0abfc',
+          400: '#e879f9',
+          500: '#d946ef',
+          600: '#c026d3',
+          700: '#a21caf',
+          800: '#86198f',
+          900: '#701a75',
+          DEFAULT: '#c026d3',
+          foreground: '#ffffff',
+        },
+        
+        // ✨ NEW: Rose/Hot Pink Palette (Secondary accent)
+        rose: {
+          50: '#fff1f2',
+          100: '#ffe4e6',
+          200: '#fecdd3',
+          300: '#fda4af',
+          400: '#fb7185',
+          500: '#f43f5e',
+          600: '#e11d48',
+          700: '#be123c',
+          800: '#9f1239',
+          900: '#881337',
+          DEFAULT: '#e11d48',
+          foreground: '#ffffff',
+        },
+        
         // Neutral grays
         gray: {
           50: '#f9fafb',
@@ -156,6 +188,9 @@ export default {
         'glow-primary': '0 0 30px rgba(37, 99, 235, 0.3)',
         'glow-secondary': '0 0 30px rgba(124, 58, 237, 0.3)',
         'glow-accent': '0 0 30px rgba(8, 145, 178, 0.3)',
+        // ✨ NEW: Pink glow effects
+        'glow-pink': '0 0 30px rgba(192, 38, 211, 0.3)',
+        'glow-rose': '0 0 30px rgba(225, 29, 72, 0.3)',
         'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
         'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
         'card-hover': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',

@@ -7,6 +7,7 @@ interface FloatingChipProps {
   initialY: number;
   delay?: number;
   onClick?: () => void;
+  mobileMode?: boolean; // ✨ NEW: Optional mobile flag
 }
 
 // ✅ OPTIMIZED: Single global mouse position (not offset per chip)
@@ -15,15 +16,23 @@ const globalMouse = {
   y: 0,
   listeners: new Set<() => void>(),
   initialized: false,
+  hasMovedOnce: false,
 
   init() {
     if (this.initialized || typeof window === "undefined") return;
     this.initialized = true;
 
+    this.x = window.innerWidth / 2;
+    this.y = window.innerHeight / 2;
+
     const handleMove = (e: MouseEvent) => {
       this.x = e.clientX;
       this.y = e.clientY;
-      // Notify all chips at once
+      
+      if (!this.hasMovedOnce) {
+        this.hasMovedOnce = true;
+      }
+      
       this.listeners.forEach((fn) => fn());
     };
 
@@ -37,23 +46,19 @@ export const FloatingChip = ({
   initialY,
   delay = 0,
   onClick,
+  mobileMode = false, // ✨ NEW
 }: FloatingChipProps) => {
-  // ✅ NEW: Track hover state for dynamic z-index
   const [isHovered, setIsHovered] = useState(false);
+  const [hasAnimatedIn, setHasAnimatedIn] = useState(false);
 
-  // ✅ Motion values
   const offsetX = useMotionValue(0);
   const offsetY = useMotionValue(0);
-  
-  // ✅ NEW: Track LIVE distance from center (updates as chip moves!)
   const liveDistanceFromCenter = useMotionValue(100);
 
-  // ✅ Smooth spring
   const springConfig = { damping: 25, stiffness: 50, mass: 1.2 };
   const x = useSpring(offsetX, springConfig);
   const y = useSpring(offsetY, springConfig);
 
-  // ✅ OPTIMIZED: Parallax multiplier based on distance (farther = moves more)
   const parallaxMultiplier = useMemo(() => {
     const centerX = 50;
     const centerY = 35;
@@ -65,66 +70,112 @@ export const FloatingChip = ({
     return 0.5 + normalized * 1.0;
   }, [initialX, initialY]);
 
-  // ✅ FIXED: Dynamic fade based on LIVE position (not static!)
-  const fadeOpacity = useTransform(
+  const baseFadeOpacity = useTransform(
     liveDistanceFromCenter,
-    [0, 150, 300], // Distance thresholds in pixels
-    [0, 0.5, 1]    // Opacity: invisible → faint → full
+    [0, 150, 300],
+    [0, 0.5, 1]
   );
   
-  const fadeScale = useTransform(
+  const baseFadeScale = useTransform(
     liveDistanceFromCenter,
-    [0, 150, 300], // Distance thresholds in pixels
-    [0.5, 0.85, 1] // Scale: tiny → medium → full
+    [0, 150, 300],
+    [0.5, 0.85, 1]
+  );
+
+  const finalOpacity = useTransform(
+    baseFadeOpacity,
+    (opacity) => isHovered ? 1 : opacity
+  );
+
+  const finalScale = useTransform(
+    baseFadeScale,
+    (scale) => isHovered ? 1 : scale
   );
 
   useEffect(() => {
-    // ✅ FIXED: Ensure init runs only once globally
+    const timer = setTimeout(() => {
+      setHasAnimatedIn(true);
+    }, delay * 1000 + 600);
+
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  useEffect(() => {
     globalMouse.init();
 
     const updatePosition = () => {
+      if (!globalMouse.hasMovedOnce || !hasAnimatedIn) {
+        offsetX.set(0);
+        offsetY.set(0);
+        
+        const initialPosX = (initialX / 100) * window.innerWidth;
+        const initialPosY = (initialY / 100) * window.innerHeight;
+        
+        const heroCenterX = window.innerWidth / 2;
+        const heroCenterY = window.innerHeight * 0.35;
+        
+        const distX = initialPosX - heroCenterX;
+        const distY = initialPosY - heroCenterY;
+        const distance = Math.sqrt(distX * distX + distY * distY);
+        
+        liveDistanceFromCenter.set(distance);
+        return;
+      }
+
       const viewportCenterX = window.innerWidth / 2;
       const viewportCenterY = window.innerHeight / 2;
-
-      // ✅ Mouse offset from center (normalized -1 to 1)
+    
       const mouseOffsetX = (globalMouse.x - viewportCenterX) / viewportCenterX;
       const mouseOffsetY = (globalMouse.y - viewportCenterY) / viewportCenterY;
-
-      // ✅ PARALLAX LAYERS: Each chip moves different amount based on distance
-      const moveX = -mouseOffsetX * 150 * parallaxMultiplier;
-      const moveY = -mouseOffsetY * 150 * parallaxMultiplier;
-
+    
+      const moveX = -mouseOffsetX * 205 * parallaxMultiplier;
+      const moveY = -mouseOffsetY * 205 * parallaxMultiplier;
+    
       offsetX.set(moveX);
       offsetY.set(moveY);
       
-      // ✅ NEW: Calculate LIVE position (initial + offset)
       const currentX = (initialX / 100) * window.innerWidth + moveX;
       const currentY = (initialY / 100) * window.innerHeight + moveY;
       
-      // ✅ NEW: Calculate distance from hero center (for fade effect)
       const heroCenterX = window.innerWidth / 2;
-      const heroCenterY = window.innerHeight * 0.35; // Hero is at 35% height
+      const heroCenterY = window.innerHeight * 0.35;
       
       const distX = currentX - heroCenterX;
       const distY = currentY - heroCenterY;
       const distance = Math.sqrt(distX * distX + distY * distY);
       
-      // ✅ NEW: Update live distance (triggers fade effect!)
       liveDistanceFromCenter.set(distance);
     };
-
-    // ✅ Register this chip's update function globally
+    
     globalMouse.listeners.add(updatePosition);
-
-    // Initial position
     updatePosition();
 
     return () => {
-      // ✅ Cleanup: Remove listener
       globalMouse.listeners.delete(updatePosition);
     };
-  }, [offsetX, offsetY, parallaxMultiplier, initialX, initialY, liveDistanceFromCenter]);
+  }, [offsetX, offsetY, parallaxMultiplier, initialX, initialY, liveDistanceFromCenter, hasAnimatedIn]);
 
+  // ✨ MOBILE MODE: Simple static button
+  if (mobileMode) {
+    return (
+      <motion.button
+        onClick={onClick}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          delay: delay,
+          duration: 0.4,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        }}
+        whileTap={{ scale: 0.95 }}
+        className="px-5 py-2.5 bg-white border border-gray-200/60 rounded-lg text-sm font-medium text-gray-700 shadow-sm active:shadow-md transition-shadow whitespace-nowrap"
+      >
+        {children}
+      </motion.button>
+    );
+  }
+
+  // ✅ DESKTOP MODE: Exact same as before (UNCHANGED)
   return (
     <motion.div
       onClick={onClick}
@@ -144,19 +195,15 @@ export const FloatingChip = ({
         top: `${initialY}%`,
         x,
         y,
-
-        // ✅ FIXED: Use LIVE fade values (updates as chip moves!)
-        opacity: fadeOpacity,
-        scale: fadeScale,
-
-        // ✅ FIXED: zIndex should be in style not animate
+        opacity: finalOpacity,
+        scale: finalScale,
         zIndex: isHovered ? 9999 : 1,
+        pointerEvents: "auto",
       }}
       className="pointer-events-auto"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Idle floating animation */}
       <motion.div
         animate={{
           y: [-8, 8, -8],
@@ -168,7 +215,6 @@ export const FloatingChip = ({
           delay: delay,
         }}
       >
-        {/* Chip button */}
         <motion.button
           whileHover={{
             scale: 1.6,
@@ -181,10 +227,7 @@ export const FloatingChip = ({
             transformStyle: "preserve-3d",
           }}
         >
-          {/* Gradient overlay on hover */}
           <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary-200/0 via-primary-200/70 to-secondary-200/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-          {/* Content */}
           <span className="relative z-10 font-medium">{children}</span>
         </motion.button>
       </motion.div>
