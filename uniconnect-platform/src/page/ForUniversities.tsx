@@ -1,10 +1,9 @@
-import { ForUniversitiesHero } from '../components/sections/ForUniversitiesHero';
+import { ForUniversitiesHeroV2 } from '../components/sections/ForUniversitiesHeroV2';
 
 export const ForUniversitiesPage = () => {
   return (
     <div className="min-h-screen">
-      <ForUniversitiesHero />
-      {/* Add more sections later */}
+      <ForUniversitiesHeroV2 />
     </div>
   );
 };
