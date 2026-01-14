@@ -51,12 +51,12 @@ const StatItem = ({ value, suffix, label, duration = 2, delay = 0 }: StatItemPro
       }}
       className="flex flex-col items-center justify-center"
     >
-      <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-primary-600 via-primary-500 to-secondary-500 bg-clip-text text-transparent mb-3">
+      <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-3">
         {displayValue}
         {displayValue > 0 && suffix}
       </h2>
 
-      <p className="text-gray-600 text-base md:text-lg font-medium">
+      <p className="text-gray-300 text-base md:text-lg font-medium">
         {label}
       </p>
     </motion.div>
@@ -70,21 +70,28 @@ export const StatsSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-20 md:py-28 bg-gradient-to-b from-white via-primary-50/30 to-white overflow-hidden"
+      className="relative py-20 md:py-28 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 overflow-hidden"
     >
-      {/* ✨ NEW: Double Line Separator */}
-      <div className="absolute top-0 left-0 right-0">
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
-        <div className="h-px bg-gradient-to-r from-transparent via-primary-200/50 to-transparent mt-1" />
-      </div>
+      {/* Subtle gradient overlays */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-indigo-900/30 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent" />
 
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-secondary-200/20 rounded-full blur-3xl" />
-      </div>
+      {/* Grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12">
+        {/* Optional Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <span className="inline-block px-4 py-2 text-sm font-semibold text-indigo-300 bg-indigo-900/30 border border-indigo-700/30 rounded-full backdrop-blur-sm">
+            Trusted by Industry Leaders
+          </span>
+        </motion.div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
           <StatItem
             value={10}
@@ -105,6 +112,24 @@ export const StatsSection = () => {
             delay={0.6}
           />
         </div>
+
+        {/* Tech Logos */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-16 text-center"
+        >
+          <p className="text-gray-400 text-sm mb-6">Powering tech teams at leading companies</p>
+          <div className="flex flex-wrap items-center justify-center gap-8 opacity-50">
+            {/* Add your tech logos here */}
+            <div className="text-gray-500 text-xs font-mono">GOOGLE</div>
+            <div className="text-gray-500 text-xs font-mono">MICROSOFT</div>
+            <div className="text-gray-500 text-xs font-mono">AMAZON</div>
+            <div className="text-gray-500 text-xs font-mono">NETFLIX</div>
+            <div className="text-gray-500 text-xs font-mono">META</div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
