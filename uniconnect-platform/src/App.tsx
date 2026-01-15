@@ -9,15 +9,35 @@ import { ProblemSolution } from './components/landing/ProblemSolution';
 import { ForCompaniesPage } from '@/page/ForCompanies';
 import { ForUniversitiesPage } from '@/page/ForUniversities';
 
-// Home page component
+import { SignupPage } from '@/page/auth/SignupPage';
+import { LoginPage } from '@/page/auth/LoginPage';
+import { CompanyDashboard } from '@/page/auth/CompanyDashboard';
+
+// Home page component - WITH SECTION IDs ✅
 const HomePage = () => {
   return (
     <>
       <Hero />
-      <StatsAndTrust />
-      <ProblemSolution />
-      <Testimonials />
-      <CTA />
+      
+      {/* ✅ ADD ID="features" */}
+      <div id="features">
+        <StatsAndTrust />
+      </div>
+      
+      {/* ✅ ADD ID="how-it-works" */}
+      <div id="how-it-works">
+        <ProblemSolution />
+      </div>
+      
+      {/* ✅ ADD ID="testimonials" */}
+      <div id="testimonials">
+        <Testimonials />
+      </div>
+      
+      {/* ✅ ADD ID="about" */}
+      <div id="about">
+        <CTA />
+      </div>
     </>
   );
 };
@@ -26,20 +46,51 @@ function App() {
   return (
     <BrowserRouter>
       <div className="overflow-x-hidden">
-        <Navbar />
-        
         <Routes>
-          {/* Home Page */}
-          <Route path="/" element={<HomePage />} />
+          {/* ============ PUBLIC ROUTES (With Navbar & Footer) ============ */}
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <HomePage />
+                <Footer />
+              </>
+            }
+          />
           
-          {/* For Companies Page */}
-          <Route path="/for-companies" element={<ForCompaniesPage />} />
+          <Route
+            path="/for-companies"
+            element={
+              <>
+                <Navbar />
+                <ForCompaniesPage />
+                <Footer />
+              </>
+            }
+          />
           
-          {/* For Universities Page */}
-          <Route path="/for-universities" element={<ForUniversitiesPage />} />
+          <Route
+            path="/for-universities"
+            element={
+              <>
+                <Navbar />
+                <ForUniversitiesPage />
+                <Footer />
+              </>
+            }
+          />
+
+          {/* ============ AUTH ROUTES (No Navbar/Footer) ============ */}
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
+
+          {/* ============ PROTECTED ROUTES (Dashboard) ============ */}
+          <Route path="/dashboard" element={<CompanyDashboard />} />
+          
+          {/* ✅ REMOVED /onboarding route - it's a modal inside dashboard */}
+
         </Routes>
-        
-        <Footer />
       </div>
     </BrowserRouter>
   );

@@ -21,7 +21,7 @@ const universities = [
 ];
 
 // ✨ NEW: Mobile chips (only shown on small screens)
-const mobileChips = ['MIT', 'Stanford', 'IIT Delhi', 'Oxford', 'Harvard', 'UC Berkeley', 'Cambridge', 'ETH Zurich', 'IIT Bombay', 'Toronto'];
+const mobileChips = ['MIT', 'Stanford', 'IIT Delhi', 'Oxford', 'Harvard', 'UC Berkeley', 'Cambridge', 'ETH Zurich', 'IIT Bombay', 'Toronto','GIETU','KIIT','SoA','IIT BBSR'];
 
 export const ForCompaniesHeroV2 = () => {
   return (

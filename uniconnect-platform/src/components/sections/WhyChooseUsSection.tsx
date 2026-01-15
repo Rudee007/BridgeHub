@@ -150,7 +150,7 @@ export const WhyChooseUsSection = () => {
               <span className="relative z-10 bg-gradient-to-r from-primary-600 via-primary-500 to-secondary-600 bg-clip-text text-transparent">
                 direct access
               </span>
-              {/* ✨ Underline decoration */}
+
               <motion.svg
                 className="absolute -bottom-2 left-0 w-full"
                 viewBox="0 0 200 12"

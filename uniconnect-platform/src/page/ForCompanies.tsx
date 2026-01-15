@@ -10,18 +10,20 @@ export const ForCompaniesPage = () => {
       {/* Hero Section with Floating Chips */}
       <ForCompaniesHeroV2 />
       
-      {/* Stats Section - Animated Numbers */}
-      <StatsSection />
+      {/* ✅ Stats Section - ID: features */}
+      <div id="features">
+        <StatsSection />
+      </div>
       
-      {/* Why Choose Us - Feature Cards */}
-      <WhyChooseUsSection />
+      {/* ✅ Why Choose Us - ID: how-it-works */}
+      <div id="how-it-works">
+        <WhyChooseUsSection />
+      </div>
       
-      
-      {/* CTA Section - Get Started */}
-      <GetStartedSection />
-      
-      {/* Footer */}
-      {/* <Footer /> */}
+      {/* ✅ CTA Section - ID: get-started */}
+      <div id="get-started">
+        <GetStartedSection />
+      </div>
     </div>
   );
 };
