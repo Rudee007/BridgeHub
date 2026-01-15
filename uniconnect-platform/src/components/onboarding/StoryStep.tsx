@@ -15,7 +15,7 @@ interface CompanyData {
 
 interface StoryStepProps {
   data: CompanyData;
-  updateData: (field: keyof CompanyData, value: string) => void; // ✅ FIXED
+  updateData: (field: keyof CompanyData, value: string) => void;
   onBack: () => void;
   onSubmit: () => void;
 }
@@ -45,23 +45,23 @@ export const StoryStep = ({ data, updateData, onBack, onSubmit }: StoryStepProps
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="space-y-6"
+      className="space-y-6 font-sans"
     >
-      {/* Logo Upload (Glassmorphism Style) */}
+      {/* Logo Upload */}
       <div>
         <label className="block text-sm font-semibold text-gray-900 mb-3">
           Company Logo
         </label>
         <label
           htmlFor="logo-upload"
-          className="relative flex flex-col items-center justify-center h-40 border-2 border-dashed border-gray-300 rounded-xl hover:border-pink-400 transition-all cursor-pointer group overflow-hidden"
+          className="relative flex flex-col items-center justify-center h-40 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary-400 transition-all cursor-pointer group overflow-hidden"
         >
           {logoPreview ? (
             <img src={logoPreview} alt="Logo" className="h-24 w-24 object-contain" />
           ) : (
             <>
-              <div className="h-16 w-16 rounded-full bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <Upload className="h-8 w-8 text-pink-600" />
+              <div className="h-16 w-16 rounded-lg bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <Upload className="h-8 w-8 text-primary-600" />
               </div>
               <p className="text-sm font-medium text-gray-600">Click to upload logo</p>
               <p className="text-xs text-gray-400 mt-1">PNG, JPG up to 5MB</p>
@@ -91,7 +91,7 @@ export const StoryStep = ({ data, updateData, onBack, onSubmit }: StoryStepProps
           }}
           placeholder="Tell students what makes your company unique..."
           rows={6}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-200 focus:border-pink-500 transition-all outline-none resize-none"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all outline-none resize-none font-sans"
         />
         <p className={`mt-2 text-xs ${remaining < 50 ? 'text-amber-600' : 'text-gray-500'}`}>
           {data.description.length} / {charLimit} characters
@@ -100,21 +100,23 @@ export const StoryStep = ({ data, updateData, onBack, onSubmit }: StoryStepProps
 
       {/* Action Buttons */}
       <div className="flex gap-4 mt-8">
-        <button
+        <motion.button
           onClick={onBack}
-          className="flex-1 py-4 rounded-lg font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-all flex items-center justify-center gap-2"
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
+          className="flex-1 py-4 rounded-lg font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-all flex items-center justify-center gap-2 border border-gray-200"
         >
           <ArrowLeft className="h-5 w-5" />
           Back
-        </button>
+        </motion.button>
         <motion.button
           onClick={onSubmit}
           disabled={!isValid}
-          whileHover={isValid ? { scale: 1.02 } : {}}
-          whileTap={isValid ? { scale: 0.98 } : {}}
-          className={`flex-[2] py-4 rounded-lg font-semibold text-white transition-all flex items-center justify-center gap-2 ${
+          whileHover={isValid ? { scale: 1.01 } : {}}
+          whileTap={isValid ? { scale: 0.99 } : {}}
+          className={`flex-[2] py-4 rounded-lg font-semibold text-white transition-all flex items-center justify-center gap-2 font-display ${
             isValid
-              ? "bg-gradient-to-r from-pink-500 to-rose-600 hover:shadow-glow-pink cursor-pointer"
+              ? "bg-gradient-to-r from-primary-600 to-secondary-600 hover:shadow-lg hover:shadow-primary-500/25 cursor-pointer"
               : "bg-gray-300 cursor-not-allowed"
           }`}
         >
