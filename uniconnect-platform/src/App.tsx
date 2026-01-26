@@ -11,7 +11,7 @@ import { ForUniversitiesPage } from '@/page/ForUniversities';
 
 import { SignupPage } from '@/page/auth/SignupPage';
 import { LoginPage } from '@/page/auth/LoginPage';
-import { CompanyDashboard } from '@/page/auth/CompanyDashboard';
+import { CompanyDashboard } from '@/page/Company/CompanyDashboard';
 
 // Home page component - WITH SECTION IDs ✅
 const HomePage = () => {
