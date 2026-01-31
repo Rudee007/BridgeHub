@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// App.tsx
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/landing/Navbar';
 import { Hero } from './components/landing/Hero';
 import { Testimonials } from './components/landing/Testimonials';
@@ -8,11 +9,14 @@ import { StatsAndTrust } from './components/landing/StatsAndTrust';
 import { ProblemSolution } from './components/landing/ProblemSolution';
 import { ForCompaniesPage } from '@/page/ForCompanies';
 import { ForUniversitiesPage } from '@/page/ForUniversities';
-
 import { SignupPage } from '@/page/auth/SignupPage';
 import { LoginPage } from '@/page/auth/LoginPage';
 import { CompanyDashboard } from '@/page/Company/CompanyDashboard';
-
+import { ProjectsList } from '@/page/Company/Projects/ProjectsList';
+import { CreateProject } from '@/page/Company/Projects/CreateProject';
+import {JobsList} from '@/page/Company/Jobs/JobList';
+import {CreateJob} from '@/page/Company/Jobs/CreateJob'
+import {JobDetails} from '@/page/Company/Jobs/JobDetails'
 // Home page component - WITH SECTION IDs ✅
 const HomePage = () => {
   return (
@@ -85,11 +89,34 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
 
-          {/* ============ PROTECTED ROUTES (Dashboard) ============ */}
-          <Route path="/dashboard" element={<CompanyDashboard />} />
-          
-          {/* ✅ REMOVED /onboarding route - it's a modal inside dashboard */}
+          {/* ============ COMPANY ROUTES (Dashboard & Features) ============ */}
+          <Route path="/company">
+            <Route path="dashboard" element={<CompanyDashboard />} />
+            <Route path="projects" element={<ProjectsList />} />
+            <Route path="projects/new" element={<CreateProject />} />
+            <Route path="jobs" element={<JobsList />} />           {/* NEW */}
+            <Route path="jobs/new" element={<CreateJob />} />   
+              <Route path="jobs/:id" element={<JobDetails />} />      {/* NEW */}
+   {/* NEW */}
+            {/* Add more company routes here as you build them */}
+            {/* <Route path="jobs" element={<JobsList />} /> */}
+            {/* <Route path="universities" element={<UniversitiesList />} /> */}
+            {/* <Route path="talent-pool" element={<TalentPool />} /> */}
+            {/* <Route path="applications" element={<ApplicationsList />} /> */}
+            {/* <Route path="analytics" element={<Analytics />} /> */}
+            {/* <Route path="settings" element={<Settings />} /> */}
+          </Route>
 
+          <Route path="/jobs" element={<Navigate to="/company/jobs" replace />} />
+<Route path="/jobs/new" element={<Navigate to="/company/jobs/new" replace />} />
+
+          {/* ============ CONVENIENCE REDIRECTS ============ */}
+          <Route path="/dashboard" element={<Navigate to="/company/dashboard" replace />} />
+          <Route path="/projects" element={<Navigate to="/company/projects" replace />} />
+          <Route path="/projects/new" element={<Navigate to="/company/projects/new" replace />} />
+
+          {/* ============ 404 FALLBACK ============ */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </BrowserRouter>
