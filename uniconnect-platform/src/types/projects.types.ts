@@ -13,6 +13,8 @@ export interface Project {
   status: ProjectStatus;
   academicLevel: AcademicLevel;
   skills: string[];
+  selectedCount: number;  // ✅ ADDED THIS
+
   teamSize: {
     min: number;
     max: number;

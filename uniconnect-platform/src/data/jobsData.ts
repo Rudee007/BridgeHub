@@ -25,6 +25,7 @@ export const mockJobs: Job[] = [
     salaryPeriod: "year",
     currency: "INR",
     showSalary: true,
+    
     openings: 2,
     deadline: "2026-02-15T23:59:59.000Z",
     status: "active",

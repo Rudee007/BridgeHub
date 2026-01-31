@@ -17,6 +17,7 @@ export const mockProjects: Project[] = [
     applicationCount: 24,
     shortlistedCount: 8,
     acceptedCount: 0,
+        selectedCount: 3,  // ✅ ADDED THIS
     deadline: "2026-02-15T23:59:59.000Z",
     createdAt: "2026-01-22T10:30:00.000Z",
     updatedAt: "2026-01-27T14:20:00.000Z",
@@ -34,6 +35,7 @@ export const mockProjects: Project[] = [
     compensation: { type: "paid", amount: 12000 },
     location: "remote",
     applicationCount: 18,
+        selectedCount: 3,  // ✅ ADDED THIS
     shortlistedCount: 5,
     acceptedCount: 0,
     deadline: "2026-02-20T23:59:59.000Z",
@@ -54,6 +56,8 @@ export const mockProjects: Project[] = [
     location: "hybrid",
     applicationCount: 32,
     shortlistedCount: 10,
+        selectedCount: 3,  // ✅ ADDED THIS
+
     acceptedCount: 3,
     deadline: "2026-01-30T23:59:59.000Z",
     createdAt: "2025-12-15T08:00:00.000Z",
@@ -68,6 +72,8 @@ export const mockProjects: Project[] = [
     academicLevel: "graduate",
     skills: ["Python", "Pandas", "D3.js", "FastAPI"],
     teamSize: { min: 2, max: 3 },
+        selectedCount: 3,  // ✅ ADDED THIS
+
     duration: { value: 6, unit: "weeks" },
     compensation: { type: "unpaid" },
     location: "remote",
@@ -90,6 +96,8 @@ export const mockProjects: Project[] = [
     duration: { value: 8, unit: "weeks" },
     compensation: { type: "paid", amount: 20000 },
     location: "remote",
+        selectedCount: 3,  // ✅ ADDED THIS
+
     applicationCount: 45,
     shortlistedCount: 12,
     acceptedCount: 2,

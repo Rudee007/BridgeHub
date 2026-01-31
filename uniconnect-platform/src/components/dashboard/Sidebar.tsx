@@ -75,11 +75,11 @@ const navItems: NavItem[] = [
     id: 'analytics',
     label: 'Analytics',
     icon: BarChart3,
-    path: '/analytics'
+    path: '/analytic'
   },
   {
     id: 'settings',
-    label: 'Settings',
+    label: 'Setting',
     icon: Settings,
     path: '/settings'
   }

@@ -17,6 +17,8 @@ import { CreateProject } from '@/page/Company/Projects/CreateProject';
 import {JobsList} from '@/page/Company/Jobs/JobList';
 import {CreateJob} from '@/page/Company/Jobs/CreateJob'
 import {JobDetails} from '@/page/Company/Jobs/JobDetails'
+import  ProjectDetails  from '@/page/Company/Projects/ProjectDetails';
+import UniList from './page/Company/University/UniList';
 // Home page component - WITH SECTION IDs ✅
 const HomePage = () => {
   return (
@@ -96,11 +98,9 @@ function App() {
             <Route path="projects/new" element={<CreateProject />} />
             <Route path="jobs" element={<JobsList />} />           {/* NEW */}
             <Route path="jobs/new" element={<CreateJob />} />   
-              <Route path="jobs/:id" element={<JobDetails />} />      {/* NEW */}
-   {/* NEW */}
-            {/* Add more company routes here as you build them */}
-            {/* <Route path="jobs" element={<JobsList />} /> */}
-            {/* <Route path="universities" element={<UniversitiesList />} /> */}
+              <Route path="jobs/:id" element={<JobDetails />} />    
+            <Route path="universities" element={<UniList />} />
+
             {/* <Route path="talent-pool" element={<TalentPool />} /> */}
             {/* <Route path="applications" element={<ApplicationsList />} /> */}
             {/* <Route path="analytics" element={<Analytics />} /> */}
@@ -113,6 +113,9 @@ function App() {
           {/* ============ CONVENIENCE REDIRECTS ============ */}
           <Route path="/dashboard" element={<Navigate to="/company/dashboard" replace />} />
           <Route path="/projects" element={<Navigate to="/company/projects" replace />} />
+          // Route: /company/projects/:id → ProjectDetails
+<Route path="/company/projects/:id" element={<ProjectDetails />} />
+
           <Route path="/projects/new" element={<Navigate to="/company/projects/new" replace />} />
 
           {/* ============ 404 FALLBACK ============ */}
