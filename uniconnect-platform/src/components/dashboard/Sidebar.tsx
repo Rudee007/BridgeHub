@@ -1,5 +1,5 @@
 // components/dashboard/Sidebar.tsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
@@ -15,8 +15,10 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
-  Menu
+  Menu,
+  LogOut
 } from 'lucide-react';
+import { cn } from '@/lib/utils'; // Assuming you have the utils file we created earlier
 
 interface SidebarProps {
   companyName?: string;
@@ -31,57 +33,58 @@ interface NavItem {
   badge?: number;
 }
 
+// ✅ FIX: Correct paths matching your App.tsx routes
 const navItems: NavItem[] = [
   {
     id: 'dashboard',
     label: 'Dashboard',
     icon: LayoutDashboard,
-    path: '/dashboard'
+    path: '/company/dashboard'
   },
   {
     id: 'projects',
     label: 'Projects',
     icon: FolderKanban,
-    path: '/projects',
+    path: '/company/projects',
     badge: 12
   },
   {
     id: 'jobs',
     label: 'Jobs',
     icon: Briefcase,
-    path: '/jobs',
+    path: '/company/jobs',
     badge: 8
   },
   {
     id: 'universities',
     label: 'Universities',
     icon: GraduationCap,
-    path: '/universities'
+    path: '/company/universities'
   },
   {
     id: 'talent-pool',
     label: 'Talent Pool',
     icon: Award,
-    path: '/talent-pool'
+    path: '/company/talent-pool'
   },
   {
     id: 'applications',
     label: 'Applications',
     icon: Inbox,
-    path: '/applications',
+    path: '/company/applications',
     badge: 23
   },
   {
     id: 'analytics',
     label: 'Analytics',
     icon: BarChart3,
-    path: '/analytic'
+    path: '/company/analytics'
   },
   {
     id: 'settings',
-    label: 'Setting',
+    label: 'Settings',
     icon: Settings,
-    path: '/settings'
+    path: '/company/settings'
   }
 ];
 
@@ -91,22 +94,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ companyName, logoUrl }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  const isActive = (path: string) => {
-    return location.pathname === path || location.pathname.startsWith(path + '/');
+  // ✅ FIX: Robust Active Check
+  // checks if the current URL starts with the nav item path
+  // Exception: Dashboard is only active on exact match or root company path
+  const checkActive = (path: string) => {
+    if (path === '/company/dashboard') {
+        return location.pathname === '/company/dashboard' || location.pathname === '/company';
+    }
+    return location.pathname.startsWith(path);
   };
 
   const handleNavigation = (path: string) => {
     navigate(path);
-    setIsMobileOpen(false); // Close mobile menu after navigation
+    setIsMobileOpen(false);
   };
 
   return (
     <>
-      {/* Mobile Menu Button - Fixed top-left */}
+      {/* Mobile Menu Button */}
       <motion.button
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsMobileOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg border border-gray-200 text-gray-700 hover:bg-gray-50"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-md border border-gray-200 text-gray-700 hover:bg-gray-50"
       >
         <Menu className="h-6 w-6" />
       </motion.button>
@@ -140,7 +149,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ companyName, logoUrl }) => {
         <SidebarContent
           isCollapsed={isCollapsed}
           setIsCollapsed={setIsCollapsed}
-          isActive={isActive}
+          checkActive={checkActive}
           handleNavigation={handleNavigation}
           companyName={companyName}
           logoUrl={logoUrl}
@@ -164,7 +173,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ companyName, logoUrl }) => {
             <SidebarContent
               isCollapsed={false}
               setIsCollapsed={() => {}}
-              isActive={isActive}
+              checkActive={checkActive}
               handleNavigation={handleNavigation}
               companyName={companyName}
               logoUrl={logoUrl}
@@ -178,11 +187,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ companyName, logoUrl }) => {
   );
 };
 
-// Sidebar Content Component
+// --- Sub Components ---
+
 interface SidebarContentProps {
   isCollapsed: boolean;
   setIsCollapsed: (collapsed: boolean) => void;
-  isActive: (path: string) => boolean;
+  checkActive: (path: string) => boolean;
   handleNavigation: (path: string) => void;
   companyName?: string;
   logoUrl?: string;
@@ -193,7 +203,7 @@ interface SidebarContentProps {
 const SidebarContent: React.FC<SidebarContentProps> = ({
   isCollapsed,
   setIsCollapsed,
-  isActive,
+  checkActive,
   handleNavigation,
   companyName,
   logoUrl,
@@ -202,246 +212,125 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
 }) => {
   return (
     <>
-      {/* Header Section - Golden ratio height */}
-      <div className="flex-shrink-0 h-16 border-b border-gray-200 flex items-center justify-between px-4">
-        <AnimatePresence mode="wait">
-          {!isCollapsed ? (
-            <motion.div
-              key="expanded"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-center gap-3"
-            >
-              {logoUrl ? (
-                <img
-                  src={logoUrl}
-                  alt={companyName || 'Company'}
-                  className="w-8 h-8 rounded-lg object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Building2 className="h-4 w-4 text-white" />
-                </div>
-              )}
-              <div className="min-w-0 flex-1">
-                <h2 className="text-sm font-display font-bold text-gray-900 truncate">
-                  {companyName || 'BridgeHub'}
-                </h2>
-                <p className="text-xs text-gray-500">Company Portal</p>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="collapsed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="w-full flex justify-center"
-            >
-              {logoUrl ? (
-                <img
-                  src={logoUrl}
-                  alt={companyName || 'Company'}
-                  className="w-8 h-8 rounded-lg object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
-                  <Building2 className="h-4 w-4 text-white" />
-                </div>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+      {/* Header */}
+      <div className="h-16 flex items-center justify-between px-4 border-b border-gray-100/50">
+        {!isCollapsed && (
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold">
+               {logoUrl ? <img src={logoUrl} alt="" className="w-full h-full rounded-lg" /> : <Building2 className="w-5 h-5" />}
+            </div>
+            <span className="font-bold text-gray-900 text-sm tracking-tight">{companyName || 'TechCorp'}</span>
+          </div>
+        )}
+        
+        {isCollapsed && (
+           <div className="w-full flex justify-center">
+             <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white">
+               <Building2 className="w-5 h-5" />
+             </div>
+           </div>
+        )}
 
-        {/* Close button (mobile) or Collapse button (desktop) */}
         {isMobile ? (
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={onClose}
-            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <X className="h-5 w-5" />
-          </motion.button>
+           <button onClick={onClose} className="p-2 text-gray-500 hover:bg-gray-100 rounded-md"><X className="w-5 h-5"/></button>
         ) : (
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+          <button 
+            onClick={() => setIsCollapsed(!isCollapsed)} 
+            className={`text-gray-400 hover:text-gray-600 transition-colors ${isCollapsed ? 'mx-auto mt-4' : ''}`}
           >
-            {isCollapsed ? (
-              <ChevronRight className="h-4 w-4" />
-            ) : (
-              <ChevronLeft className="h-4 w-4" />
-            )}
-          </motion.button>
+            {isCollapsed ? null : <ChevronLeft className="w-5 h-5" />}
+          </button>
         )}
       </div>
 
-      {/* Navigation Items */}
-      <nav className="flex-1 overflow-y-auto py-4 px-2">
-        <div className="space-y-1">
-          {navItems.map((item, index) => (
-            <NavItemComponent
-              key={item.id}
-              item={item}
-              isActive={isActive(item.path)}
-              isCollapsed={isCollapsed}
-              onClick={() => handleNavigation(item.path)}
-              index={index}
-            />
-          ))}
-        </div>
-      </nav>
+      {/* Nav List */}
+      <div className="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
+        {navItems.map((item) => (
+          <NavItem 
+            key={item.id} 
+            item={item} 
+            isActive={checkActive(item.path)} 
+            isCollapsed={isCollapsed}
+            onClick={() => handleNavigation(item.path)}
+          />
+        ))}
+      </div>
 
-      {/* Footer - Collapse hint for desktop */}
-      {!isMobile && (
-        <div className="flex-shrink-0 p-4 border-t border-gray-200">
-          <AnimatePresence mode="wait">
-            {!isCollapsed ? (
-              <motion.div
-                key="expanded-footer"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex items-center justify-between text-xs text-gray-500"
-              >
-                <span>Press to collapse</span>
-                <ChevronLeft className="h-3 w-3" />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="collapsed-footer"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex justify-center"
-              >
-                <ChevronRight className="h-4 w-4 text-gray-400" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      )}
+      {/* Footer */}
+      <div className="p-3 border-t border-gray-100">
+        <button className={cn(
+            "flex items-center gap-3 w-full px-3 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-all group",
+            isCollapsed && "justify-center"
+        )}>
+           <LogOut className="w-5 h-5" />
+           {!isCollapsed && <span className="text-sm font-medium">Logout</span>}
+        </button>
+      </div>
     </>
   );
 };
 
-// Navigation Item Component
-interface NavItemComponentProps {
-  item: NavItem;
-  isActive: boolean;
-  isCollapsed: boolean;
-  onClick: () => void;
-  index: number;
-}
-
-const NavItemComponent: React.FC<NavItemComponentProps> = ({
-  item,
-  isActive,
-  isCollapsed,
-  onClick,
-  index
-}) => {
+const NavItem = ({ item, isActive, isCollapsed, onClick }: { item: NavItem, isActive: boolean, isCollapsed: boolean, onClick: () => void }) => {
   const Icon = item.icon;
 
   return (
-    <motion.button
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.03, duration: 0.2 }}
-      whileHover={{ x: isCollapsed ? 0 : 4 }}
-      whileTap={{ scale: 0.98 }}
-      onClick={onClick}
-      className={`
-        w-full flex items-center gap-3 px-3 py-2.5 rounded-lg
-        transition-all duration-200 group relative
-        ${isActive
-          ? 'bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 text-blue-600 border border-blue-100'
-          : 'text-gray-700 hover:bg-gray-50 border border-transparent hover:border-gray-200'
-        }
-        ${isCollapsed ? 'justify-center' : ''}
-      `}
-    >
-      {/* Active indicator */}
+    <div className="relative group mb-1">
+       {/* Active Indicator Strip (Left Side) */}
       {isActive && !isCollapsed && (
-        <motion.div
-          layoutId="activeIndicator"
-          className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-blue-600 via-purple-600 to-pink-600 rounded-r-full"
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        />
-      )}
+          <motion.div 
+            layoutId="active-strip"
+            className="absolute left-0 top-0 bottom-0 w-1 bg-primary-600 rounded-r-full my-1" 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          />
+       )}
 
-      {/* Icon */}
-      <div className="relative flex-shrink-0">
-        <Icon
-          className={`h-5 w-5 transition-colors ${
-            isActive ? 'text-blue-600' : 'text-gray-600 group-hover:text-gray-900'
-          }`}
-        />
+     <button
+        onClick={onClick}
+        className={cn(
+          "flex items-center w-full p-2.5 mx-2 rounded-xl transition-all duration-200 relative",
+          // Calculate width to account for margin so it doesn't overflow
+          isCollapsed ? "justify-center mx-0 w-full" : "w-[calc(100%-16px)] gap-3",
+          isActive 
+            ? "bg-primary-50 text-primary-700 font-semibold" 
+            : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 font-medium"
+        )}
+      >
+
         
-        {/* Badge for collapsed state */}
-        {isCollapsed && item.badge && (
-          <motion.span
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-pink-500 to-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center"
-          >
-            {item.badge > 9 ? '9+' : item.badge}
-          </motion.span>
-        )}
-      </div>
-
-      {/* Label & Badge */}
-      <AnimatePresence mode="wait">
+<Icon className={cn(
+          "w-5 h-5 transition-colors flex-shrink-0",
+          isActive ? "text-primary-600" : "text-gray-400 group-hover:text-gray-600"
+        )} />
+        
         {!isCollapsed && (
-          <motion.div
-            key="label"
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 1, width: 'auto' }}
-            exit={{ opacity: 0, width: 0 }}
-            transition={{ duration: 0.2 }}
-            className="flex items-center justify-between flex-1 min-w-0"
-          >
-            <span className={`text-[15px] font-medium truncate ${
-              isActive ? 'font-semibold' : ''
-            }`}>
-              {item.label}
-            </span>
-            
+          <>
+            <span className="flex-1 text-left text-sm truncate">{item.label}</span>
             {item.badge && (
-              <motion.span
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                className={`
-                  px-2 py-0.5 text-xs font-bold rounded-full flex-shrink-0
-                  ${isActive
-                    ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white'
-                    : 'bg-gray-200 text-gray-700'
-                  }
-                `}
-              >
+              <span className={cn(
+                "px-2 py-0.5 rounded-md text-xs font-bold transition-colors",
+                isActive 
+                  ? "bg-primary-600 text-white" 
+                  : "bg-gray-100 text-gray-600"
+              )}>
                 {item.badge}
-              </motion.span>
+              </span>
             )}
-          </motion.div>
+          </>
         )}
-      </AnimatePresence>
 
-      {/* Tooltip for collapsed state */}
+        {/* Collapsed Badge (Dot) */}
+        {isCollapsed && item.badge && (
+           <span className="absolute top-2 right-2 w-2 h-2 bg-primary-600 rounded-full border border-white" />
+        )}
+      </button>
+
+      {/* Hover Tooltip for Collapsed State */}
       {isCollapsed && (
-        <div className="absolute left-full ml-2 px-3 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
+        <div className="absolute left-full top-1/2 -translate-y-1/2 ml-4 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none shadow-lg">
           {item.label}
-          {item.badge && (
-            <span className="ml-2 px-1.5 py-0.5 bg-white/20 rounded text-xs">
-              {item.badge}
-            </span>
-          )}
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-2 h-2 bg-gray-900 rotate-45"></div>
         </div>
       )}
-    </motion.button>
+    </div>
   );
 };
