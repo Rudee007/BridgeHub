@@ -25,6 +25,9 @@ import { JobsList } from '@/page/Company/Jobs/JobList';
 import { CreateJob } from '@/page/Company/Jobs/CreateJob';
 import { JobDetails } from '@/page/Company/Jobs/JobDetails';
 import { UniList } from '@/page/Company/University/UniList'; // Ensure this path is correct
+import { TalentList } from './page/Company/Talent/TalentList';
+import { AnalyticsDashboard } from '@/page/Company/Analytics/AnalyticsDashboard';
+import { ApplicationsPage } from './page/Applications/ApplicationsPage';
 
 const HomePage = () => {
   return (
@@ -68,6 +71,8 @@ function App() {
             
             {/* Universities (New) */}
             <Route path="universities" element={<UniList />} />
+            <Route path="talent-pool" element={<TalentList />} />
+
           </Route>
 
           {/* ============ REDIRECTS ============ */}
@@ -75,6 +80,10 @@ function App() {
           <Route path="/jobs" element={<Navigate to="/company/jobs" replace />} />
           <Route path="/projects" element={<Navigate to="company/projects" replace/>}/>
           {/* Fallback */}
+
+          <Route path="/company/analytics" element={<AnalyticsDashboard />} />
+          <Route path="/company/applications" element={<ApplicationsPage />} />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

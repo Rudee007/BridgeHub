@@ -94,9 +94,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ companyName, logoUrl }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  // ✅ FIX: Robust Active Check
-  // checks if the current URL starts with the nav item path
-  // Exception: Dashboard is only active on exact match or root company path
+
   const checkActive = (path: string) => {
     if (path === '/company/dashboard') {
         return location.pathname === '/company/dashboard' || location.pathname === '/company';
@@ -111,7 +109,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ companyName, logoUrl }) => {
 
   return (
     <>
-      {/* Mobile Menu Button */}
       <motion.button
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsMobileOpen(true)}
