@@ -1,8 +1,11 @@
 // App.tsx
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
+// Layouts
+import { CompanyLayout } from './components/layout/CompanyLayout'; // ✅ Import the new layout
+
 // Landing Components
-import { Navbar } from './components/landing/Navbar';
+import { Navbar } from './components/landing/Navbar'; // Landing Navbar
 import { Hero } from './components/landing/Hero';
 import { Testimonials } from './components/landing/Testimonials';
 import { CTA } from './components/landing/CTA';
@@ -24,29 +27,28 @@ import ProjectDetails from '@/page/Company/Projects/ProjectDetails';
 import { JobsList } from '@/page/Company/Jobs/JobList';
 import { CreateJob } from '@/page/Company/Jobs/CreateJob';
 import { JobDetails } from '@/page/Company/Jobs/JobDetails';
-import { UniList } from '@/page/Company/University/UniList'; // Ensure this path is correct
-import { TalentList } from './page/Company/Talent/TalentList';
+import { UniList } from '@/page/Company/University/UniList';
+import { TalentList } from '@/page/Company/Talent/TalentList';
 import { AnalyticsDashboard } from '@/page/Company/Analytics/AnalyticsDashboard';
 import { ApplicationsPage } from './page/Applications/ApplicationsPage';
 
-const HomePage = () => {
-  return (
-    <>
-      <Hero />
-      <div id="features"><StatsAndTrust /></div>
-      <div id="how-it-works"><ProblemSolution /></div>
-      <div id="testimonials"><Testimonials /></div>
-      <div id="about"><CTA /></div>
-    </>
-  );
-};
+const HomePage = () => (
+  <>
+    <Hero />
+    <div id="features"><StatsAndTrust /></div>
+    <div id="how-it-works"><ProblemSolution /></div>
+    <div id="testimonials"><Testimonials /></div>
+    <div id="about"><CTA /></div>
+  </>
+);
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="overflow-x-hidden">
+      <div className="overflow-x-hidden font-sans">
         <Routes>
           {/* ============ PUBLIC ROUTES ============ */}
+          {/* These use the Landing Navbar */}
           <Route path="/" element={<><Navbar /><HomePage /><Footer /></>} />
           <Route path="/for-companies" element={<><Navbar /><ForCompaniesPage /><Footer /></>} />
           <Route path="/for-universities" element={<><Navbar /><ForUniversitiesPage /><Footer /></>} />
@@ -55,8 +57,13 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
 
-          {/* ============ COMPANY ROUTES ============ */}
-          <Route path="/company">
+          {/* ============ COMPANY ROUTES (PROTECTED) ============ */}
+          {/* ✅ Wrapped in CompanyLayout to provide Global Sidebar & Navbar */}
+          <Route path="/company" element={<CompanyLayout />}>
+            
+            {/* The index route redirects to dashboard */}
+            <Route index element={<Navigate to="dashboard" replace />} />
+            
             <Route path="dashboard" element={<CompanyDashboard />} />
             
             {/* Projects */}
@@ -69,21 +76,23 @@ function App() {
             <Route path="jobs/new" element={<CreateJob />} />
             <Route path="jobs/:id" element={<JobDetails />} />
             
-            {/* Universities (New) */}
+            {/* Network & Talent */}
             <Route path="universities" element={<UniList />} />
             <Route path="talent-pool" element={<TalentList />} />
-
+            <Route path="applications" element={<ApplicationsPage />} />
+            
+            {/* Insights */}
+            <Route path="analytics" element={<AnalyticsDashboard />} />
+            
+            {/* Settings Placeholder */}
+            <Route path="settings" element={<div className="p-10 text-center text-gray-500">Settings Page Coming Soon</div>} />
           </Route>
 
           {/* ============ REDIRECTS ============ */}
+          {/* If user tries to access /dashboard directly, send them to /company/dashboard */}
           <Route path="/dashboard" element={<Navigate to="/company/dashboard" replace />} />
-          <Route path="/jobs" element={<Navigate to="/company/jobs" replace />} />
-          <Route path="/projects" element={<Navigate to="company/projects" replace/>}/>
-          {/* Fallback */}
-
-          <Route path="/company/analytics" element={<AnalyticsDashboard />} />
-          <Route path="/company/applications" element={<ApplicationsPage />} />
-
+          
+          {/* 404 / Catch All */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

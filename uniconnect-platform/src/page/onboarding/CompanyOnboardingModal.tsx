@@ -78,7 +78,10 @@ export const CompanyOnboardingModal = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* ✅ FIX: Increased Z-Index to z-[100] to appear above global sidebar/navbar.
+         Added 'fixed' positioning to ensure it locks to the viewport.
+      */}
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
         
         {/* Backdrop */}
         <motion.div

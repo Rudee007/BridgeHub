@@ -98,9 +98,7 @@ export const TalentList = () => {
 
   return (
     <div className="min-h-screen bg-gray-50/50">
-      <Sidebar />
       
-      <div className="lg:pl-[280px]">
         <div className="p-6 lg:p-8 max-w-[1600px] mx-auto space-y-8">
            
            {/* Page Header */}
@@ -169,7 +167,6 @@ export const TalentList = () => {
               </div>
            </div>
         </div>
-      </div>
 
       {/* --- MODALS --- */}
       <TalentProfileModal 

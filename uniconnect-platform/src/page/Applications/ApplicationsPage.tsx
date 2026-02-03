@@ -107,9 +107,7 @@ export const ApplicationsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50/50">
-      <Sidebar />
       
-      <div className="lg:pl-[280px]">
         <div className="p-6 lg:p-8 max-w-[1600px] mx-auto space-y-6">
           
           {/* Header */}
@@ -257,7 +255,6 @@ export const ApplicationsPage = () => {
               </div>
             )}
           </div>
-        </div>
       </div>
 
       {/* --- PROFILE MODAL (Z-Index Fixed) --- */}
