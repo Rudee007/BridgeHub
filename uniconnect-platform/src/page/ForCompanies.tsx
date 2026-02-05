@@ -24,6 +24,8 @@ export const ForCompaniesPage = () => {
       <div id="get-started">
         <GetStartedSection />
       </div>
+
+      
     </div>
   );
 };

@@ -28,7 +28,7 @@ export const ForUniversitiesHeroV2 = () => {
     <>
       {/* ✅ DESKTOP SECTION (EXACTLY AS BEFORE - UNCHANGED) */}
       <section className="relative h-[65vh] flex items-center justify-center overflow-hidden bg-white pt-20 hidden lg:flex">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/30 via-white to-purple-50/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-pink-50/30 via-white to-blue-50/20" />
         
         <div className="absolute inset-0 max-h-[65vh] pointer-events-none">
           {companies.map((company, index) => (
@@ -44,12 +44,12 @@ export const ForUniversitiesHeroV2 = () => {
           ))}
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center pointer-events-none">
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pointer-events-none">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm border border-secondary-200/60 mb-8 shadow-lg pointer-events-auto"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm border border-secondary-200/60 mb-6 shadow-lg pointer-events-auto"
           >
             <GraduationCap className="w-4 h-4 text-secondary-600" />
             <span className="text-sm font-medium text-secondary-700">For Universities</span>
