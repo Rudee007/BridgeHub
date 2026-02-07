@@ -36,6 +36,7 @@ const PuzzlePiece = ({ className, delay = 0, connected = false }: { className?: 
       x: [0, Math.random() * 20 - 10, 0],
       y: [0, Math.random() * 20 - 10, 0],
     }}
+    
     transition={{
       duration: connected ? 0.8 : 4,
       delay: delay,
