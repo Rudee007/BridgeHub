@@ -15,7 +15,7 @@ const stats = [
   },
   { 
     value: "60+", 
-    label: "UNIVERSITY INTEGRATIONS",
+    label: "UNIVERSITY INTEGRATION",
     gradient: "from-pink-400 to-rose-500"
   },
 ];
