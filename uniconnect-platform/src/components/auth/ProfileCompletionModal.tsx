@@ -86,7 +86,7 @@ export const ProfileCompletionModal = ({ onComplete, onDismiss, userData }: Prof
             <h2 className="text-2xl font-bold">Complete Your Profile</h2>
             <button
               onClick={handleSkip}
-              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              className="p-2 hover:bg-white/25 rounded-lg transition-colors"
             >
               <X size={24} />
             </button>
@@ -114,7 +114,7 @@ export const ProfileCompletionModal = ({ onComplete, onDismiss, userData }: Prof
         </div>
 
         {/* Content */}
-        <div className="px-8 py-6 max-h-[calc(90vh-200px)] overflow-y-auto">
+        <div className="px-8 py-6 max-h-[calc(92vh-200px)] overflow-y-auto">
           <AnimatePresence mode="wait">
             {currentStep === 1 && (
               <Step1Content
