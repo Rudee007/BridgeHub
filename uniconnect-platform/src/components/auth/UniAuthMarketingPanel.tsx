@@ -14,7 +14,7 @@ const stats = [
     gradient: "from-blue-400 to-indigo-500"
   },
   { 
-    value: "50k+", 
+    value: "50K+", 
     label: "STUDENT CAREERS LAUNCHED",
     gradient: "from-violet-400 to-fuchsia-500"
   },
@@ -23,7 +23,7 @@ const stats = [
 // ✅ Updated to use Academic Institutions (Peer Social Proof)
 const universities = [
   "Stanford", "MIT", "Harvard",
-  "IIT Bombay", "Cambridge", "Oxford"
+  "IIT Bombay", "Cambridge", "Oxford", "GIETU", "Delhi University", "Bangalore University", 
 ];
 
 export const UniAuthMarketingPanel = () => {
