@@ -39,7 +39,7 @@ export const UniAuthMarketingPanel = () => {
         </div>
 
         {/* Headline */}
-        <h1 className="text-5xl xl:text-6xl font-bold leading-[1.05] tracking-tight">
+        <h1 className="text-5xl xl:text-6xl font-bold leading-[1.05] tracking-tight bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
           Empower your students <br />
           with careers that <span className="text-blue-300 opacity-80">matter</span>
         </h1>
