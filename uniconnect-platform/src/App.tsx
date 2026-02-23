@@ -17,10 +17,10 @@ import { ForCompaniesPage } from '@/page/ForCompanies';
 import { ForUniversitiesPage } from '@/page/ForUniversities';
 
 // --- AUTH PAGES ---
-import { LoginPage } from '@/page/auth/LoginPage'; // Company Login
-import { SignupPage } from '@/page/auth/SignupPage'; // Company Signup
-import { UniLoginPage } from '@/page/auth/UniLoginPage'; // ✅ University Login
-import { UniSignupPage } from '@/page/auth/UniSignupPage'; // ✅ University Signup
+import { LoginPage } from '@/page/auth/LoginPage'; 
+import { SignupPage } from '@/page/auth/SignupPage'; 
+import { UniLoginPage } from '@/page/auth/UniLoginPage'; 
+import { UniSignupPage } from '@/page/auth/UniSignupPage'; 
 
 // Company Dashboard Pages
 import { CompanyDashboard } from '@/page/Company/CompanyDashboard';
@@ -34,6 +34,9 @@ import { UniList } from '@/page/Company/University/UniList';
 import { TalentList } from '@/page/Company/Talent/TalentList';
 import { AnalyticsDashboard } from '@/page/Company/Analytics/AnalyticsDashboard';
 import { ApplicationsPage } from '@/page/Applications/ApplicationsPage';
+
+// ✅ FIX 1: Imported without curly braces (Default Import)
+import UniversityDashboard from '@/page/University/UniversityDashboard';
 
 const HomePage = () => (
   <>
@@ -56,44 +59,36 @@ function App() {
           <Route path="/for-universities" element={<><Navbar /><ForUniversitiesPage /><Footer /></>} />
 
           {/* ============ AUTHENTICATION ROUTES ============ */}
-          
-          {/* 1. Company Auth (Default) */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          
-          {/* 2. Explicit Company Auth Routes */}
           <Route path="/auth/company/login" element={<LoginPage />} />
           <Route path="/auth/company/signup" element={<SignupPage />} />
-
-          {/* 3. University Auth Routes */}
           <Route path="/auth/university/login" element={<UniLoginPage />} />
           <Route path="/auth/university/signup" element={<UniSignupPage />} />
-
 
           {/* ============ COMPANY DASHBOARD ROUTES ============ */}
           <Route path="/company" element={<CompanyLayout />}>
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<CompanyDashboard />} />
-            
-            {/* Projects */}
             <Route path="projects" element={<ProjectsList />} />
             <Route path="projects/new" element={<CreateProject />} />
             <Route path="projects/:id" element={<ProjectDetails />} />
-            
-            {/* Jobs */}
             <Route path="jobs" element={<JobsList />} />
             <Route path="jobs/new" element={<CreateJob />} />
             <Route path="jobs/:id" element={<JobDetails />} />
-            
-            {/* Network */}
             <Route path="universities" element={<UniList />} />
             <Route path="talent-pool" element={<TalentList />} />
             <Route path="applications" element={<ApplicationsPage />} />
-            
-            {/* Analytics */}
             <Route path="analytics" element={<AnalyticsDashboard />} />
-            
             <Route path="settings" element={<div className="p-10 text-center text-gray-500">Settings Page Coming Soon</div>} />
+          </Route>
+
+          {/* ============ UNIVERSITY DASHBOARD ROUTES ============ */}
+          {/* ✅ FIX 2: Removed element={<UniversityLayout />} since the dashboard already includes it */}
+          <Route path="/university">
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<UniversityDashboard />} />
+            {/* Future university-specific routes can be added here */}
           </Route>
 
           {/* ============ REDIRECTS & 404 ============ */}
