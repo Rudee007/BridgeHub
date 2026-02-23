@@ -34,10 +34,10 @@ const initialProposals = [
 ];
 
 const cardVariants = {
-  hidden: { opacity: 0, x: -20 },
+  hidden: { opacity: 0, y: 15 },
   visible: (i: number) => ({
     opacity: 1,
-    x: 0,
+    y: 0,
     transition: { delay: i * 0.08, duration: 0.35 },
   }),
   exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } },
@@ -55,124 +55,128 @@ export function EndorsementQueue() {
   };
 
   return (
-    <div className="bg-card rounded-2xl border border-gray-100 p-6 shadow-card h-full flex flex-col">
+    // ✅ Thin border, clean white background, soft shadow (Matches VerificationQueue perfectly)
+    <div className="bg-white rounded-[20px] border border-gray-200 shadow-sm flex flex-col h-full w-full overflow-hidden">
       
       {/* Header Section */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="px-6 py-5 flex items-center justify-between bg-white shrink-0 border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-            {/* Uses your custom 'animate-pulse-ring' and secondary (purple) color */}
-            <span className="w-2 h-2 bg-secondary-500 rounded-full animate-pulse-ring" />
+          <h2 className="text-[17px] font-bold text-gray-900 flex items-center gap-2.5">
+            {/* ✅ Small purple dot exactly like the screenshot */}
+            <span className="w-2 h-2 bg-purple-500 rounded-full" />
             Endorsement Queue
           </h2>
-          {/* Badge using secondary colors */}
-          <span className="px-2.5 py-1 bg-secondary-50 text-secondary-700 text-xs font-bold rounded-md">
+          {/* ✅ Light purple pill badge */}
+          <span className="px-2.5 py-0.5 bg-purple-50 text-purple-600 text-[11px] font-bold rounded-full">
             {proposals.length} awaiting
           </span>
         </div>
         
         <Link 
           to="/university/dashboard/endorse"
-          className="text-sm font-semibold text-primary-600 hover:text-primary-800 flex items-center gap-1 transition-colors group"
+          className="text-sm font-medium text-primary-600 hover:text-primary-800 flex items-center gap-1 transition-colors"
         >
           View All
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
 
-      {/* Content Area */}
-      <div className="space-y-4 flex-1">
-        <AnimatePresence>
-          {proposals.map((proposal, index) => (
-            <motion.div
-              key={proposal.id}
-              custom={index}
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              layout
-              // Uses your custom shadow-md and secondary border on hover
-              className="p-5 bg-card rounded-xl border border-gray-100 hover:border-secondary-200 hover:shadow-card transition-all duration-300 group"
-            >
-              <div className="flex items-start gap-4">
-                
-                {/* Inline Avatar Implementation with secondary palette */}
-                <div className="w-10 h-10 rounded-full bg-secondary-50 flex items-center justify-center text-secondary-700 font-bold text-sm shrink-0 border border-secondary-100">
-                  {proposal.initials}
-                </div>
-                
-                <div className="flex-1 min-w-0">
-                  {/* Title & Meta Info */}
-                  <h3 className="text-base font-bold text-gray-900 truncate group-hover:text-secondary-700 transition-colors">
-                    {proposal.projectTitle}
-                  </h3>
+      {/* Content Area - Scrollable on shorter screens */}
+      <div className="p-6 overflow-y-auto bg-white flex-1 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200 hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
+        <div className="space-y-4">
+          <AnimatePresence>
+            {proposals.map((proposal, index) => (
+              <motion.div
+                key={proposal.id}
+                custom={index}
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                layout
+                // ✅ Inner cards: soft border-gray-200, rounded-2xl
+                className="p-5 bg-white rounded-2xl border border-gray-200 hover:border-primary-200 hover:shadow-sm transition-all duration-300 group"
+              >
+                <div className="flex items-start gap-4">
                   
-                  <div className="flex items-center gap-2 mt-1 flex-wrap">
-                    <span className="text-sm text-gray-500 font-medium">{proposal.studentName}</span>
-                    <span className="text-gray-300">·</span>
-                    <span className="text-sm text-primary-600 font-semibold">{proposal.company}</span>
+                  {/* Avatar - Circular, Light Purple */}
+                  <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-700 font-bold text-sm shrink-0 border border-purple-100/50">
+                    {proposal.initials}
                   </div>
                   
-                  <div className="flex items-center gap-1.5 mt-1.5 text-gray-400">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span className="text-xs font-medium">{proposal.submittedAt}</span>
-                  </div>
-
-                  {/* Inline Badge Implementation for Skills */}
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {proposal.skills.map((skill) => (
-                      <span 
-                        key={skill} 
-                        className="px-2.5 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex items-center gap-3 mt-5">
-                    <motion.button
-                      whileHover={{ y: -1 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => handleEndorse(proposal.id)}
-                      // Perfect gradient using your primary (blue) and secondary (purple) variables
-                      className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-600 hover:from-primary-600 hover:to-secondary-700 text-white rounded-lg text-sm font-semibold shadow-sm transition-all"
-                    >
-                      <CheckCircle2 className="w-4 h-4" />
-                      Endorse
-                    </motion.button>
+                  <div className="flex-1 min-w-0">
+                    {/* Title */}
+                    <h3 className="text-[15px] font-bold text-gray-900 truncate group-hover:text-primary-600 transition-colors">
+                      {proposal.projectTitle}
+                    </h3>
                     
-                    <button
-                      onClick={() => handleDecline(proposal.id)}
-                      className="px-4 py-2 border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg text-sm font-medium transition-colors"
-                    >
-                      Decline
-                    </button>
-                  </div>
-                  
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+                    {/* Sub Info: Name and Company */}
+                    <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                      <span className="text-[13px] text-gray-500 font-medium">{proposal.studentName}</span>
+                      <span className="text-gray-300">·</span>
+                      <span className="text-[13px] text-primary-600 font-medium">{proposal.company}</span>
+                    </div>
+                    
+                    {/* Date */}
+                    <div className="flex items-center gap-1.5 mt-1 text-gray-400">
+                      <Calendar className="w-3 h-3" />
+                      <span className="text-[12px] font-medium">{proposal.submittedAt}</span>
+                    </div>
 
-        {/* Empty State */}
-        {proposals.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center py-12 text-center h-full"
-          >
-            {/* Uses your success palette (emerald green) */}
-            <div className="w-16 h-16 bg-success-50 rounded-full flex items-center justify-center mb-4">
-              <CheckCircle2 className="w-8 h-8 text-success-500" />
-            </div>
-            <p className="text-lg font-bold text-gray-900">All proposals reviewed!</p>
-            <p className="text-sm text-gray-500 mt-1">Nothing pending endorsement at the moment.</p>
-          </motion.div>
-        )}
+                    {/* Skills - Soft gray rounded pills */}
+                    <div className="flex flex-wrap gap-2 mt-3.5">
+                      {proposal.skills.map((skill) => (
+                        <span 
+                          key={skill} 
+                          className="px-3 py-1 bg-gray-50 border border-gray-100 text-gray-600 text-[11px] font-semibold rounded-full"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Action Buttons - Pill shaped */}
+                    <div className="flex items-center gap-2.5 mt-4">
+                      <motion.button
+                        whileTap={{ scale: 0.96 }}
+                        onClick={() => handleEndorse(proposal.id)}
+                        // ✅ Solid primary blue, rounded-full
+                        className="flex items-center gap-1.5 px-4 py-1.5 bg-primary-600 hover:bg-primary-700 text-white rounded-full text-[13px] font-semibold transition-colors"
+                      >
+                        <CheckCircle2 className="w-4 h-4" />
+                        Endorse
+                      </motion.button>
+                      
+                      <button
+                        onClick={() => handleDecline(proposal.id)}
+                        // ✅ Outlined, rounded-full
+                        className="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-full text-[13px] font-semibold transition-colors"
+                      >
+                        Decline
+                      </button>
+                    </div>
+                    
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+
+          {/* Empty State */}
+          {proposals.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex flex-col items-center justify-center py-12 text-center"
+            >
+              <div className="w-16 h-16 bg-success-50 rounded-full flex items-center justify-center mb-4">
+                <CheckCircle2 className="w-8 h-8 text-success-500" />
+              </div>
+              <p className="text-lg font-bold text-gray-900">All proposals reviewed!</p>
+              <p className="text-sm text-gray-500 mt-1">Nothing pending endorsement at the moment.</p>
+            </motion.div>
+          )}
+        </div>
       </div>
     </div>
   );

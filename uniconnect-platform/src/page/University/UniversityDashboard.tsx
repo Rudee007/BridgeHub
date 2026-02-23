@@ -66,21 +66,20 @@ export default function UniversityDashboard() {
         </motion.div>
 
         {/* 6. Activity Feed + Placement Analytics */}
-        <motion.div 
-          variants={sectionVariants} 
-          className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8 items-start"
-        >
-          {/* Left Side: Recent Activity */}
-          <div className="xl:col-span-2 w-full">
-            <UniActivityFeed />
-          </div>
-          
-          {/* Right Side: Analytics Chart */}
-          <div className="w-full sticky top-0">
-            <PlacementAnalytics />
-          </div>
-        </motion.div>
-
+{/* 6. Activity Feed + Placement Analytics */}
+<motion.div 
+  variants={sectionVariants} 
+  // 👇 MAKE SURE THIS SAYS items-stretch
+  className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8 items-stretch"
+>
+  <div className="xl:col-span-2 w-full">
+    <UniActivityFeed />
+  </div>
+  
+  <div className="w-full">
+    <PlacementAnalytics />
+  </div>
+</motion.div>
       </motion.div>
     </UniversityLayout>
   );

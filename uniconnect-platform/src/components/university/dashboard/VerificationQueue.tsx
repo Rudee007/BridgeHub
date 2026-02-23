@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, XCircle, ArrowRight, PartyPopper } from "lucide-react";
+import { CheckCircle2, XCircle, ArrowRight, PartyPopper } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const initialStudents = [
@@ -31,6 +31,15 @@ const initialStudents = [
     appliedAt: "Yesterday",
     initials: "RM",
   },
+  {
+    id: 4,
+    name: "Sneha Iyer",
+    rollNo: "MBA2022012",
+    enrollmentNo: "IIT-B-22-012",
+    department: "MBA",
+    appliedAt: "Yesterday",
+    initials: "SI",
+  },
 ];
 
 const rowVariants = {
@@ -40,7 +49,7 @@ const rowVariants = {
     y: 0,
     transition: { delay: i * 0.06, duration: 0.3 },
   }),
-  exit: { opacity: 0, x: 40, transition: { duration: 0.25 } },
+  exit: { opacity: 0, x: -20, transition: { duration: 0.2 } },
 };
 
 export function VerificationQueue() {
@@ -55,50 +64,51 @@ export function VerificationQueue() {
   };
 
   return (
-    <div className="bg-card rounded-2xl border border-border shadow-card flex flex-col overflow-hidden h-full">
+    <div className="bg-white rounded-[20px] border border-gray-200 shadow-sm flex flex-col overflow-hidden w-full">
+      
       {/* Header */}
-      <div className="p-6 border-b border-border/50 flex items-center justify-between bg-card shrink-0">
+      <div className="px-6 py-5 flex items-center justify-between bg-white shrink-0 border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-            <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse-ring" />
+          <h2 className="text-[17px] font-bold text-gray-900 flex items-center gap-2.5">
+            <span className="w-2 h-2 bg-orange-400 rounded-full" />
             Verification Queue
           </h2>
-          <span className="px-2.5 py-1 bg-amber-50 text-amber-600 text-xs font-bold rounded-md">
+          <span className="px-2.5 py-0.5 bg-orange-50 text-orange-500 text-[11px] font-bold rounded-full">
             {students.length} pending
           </span>
         </div>
         <Link 
           to="/university/dashboard/verify"
-          className="text-sm font-semibold text-primary-600 hover:text-primary-800 flex items-center gap-1 transition-colors group"
+          className="text-sm font-medium text-primary-600 hover:text-primary-800 flex items-center gap-1 transition-colors"
         >
           View All
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
 
-      {/* Table Content */}
-      <div className="flex-1 overflow-x-auto bg-card">
+      {/* Table Content - ✅ Added custom sleek scrollbar classes here */}
+      <div className="w-full overflow-x-auto bg-white [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200 hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full pb-1">
         {students.length === 0 ? (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center py-16 text-center"
+            className="flex flex-col items-center justify-center py-16 text-center min-w-[600px]"
           >
             <div className="w-16 h-16 bg-success-50 rounded-full flex items-center justify-center mb-4">
               <PartyPopper className="w-8 h-8 text-success-500" />
             </div>
-            <p className="text-lg font-bold text-foreground">No students pending verification 🎉</p>
-            <p className="text-sm text-muted-foreground mt-1">All caught up!</p>
+            <p className="text-lg font-bold text-gray-900">No students pending verification 🎉</p>
+            <p className="text-sm text-gray-500 mt-1">All caught up!</p>
           </motion.div>
         ) : (
-          <table className="w-full text-left border-collapse">
+          <table className="w-full text-left border-collapse whitespace-nowrap min-w-[800px]">
             <thead>
-              <tr className="border-b border-border bg-muted/20">
-                <th className="text-xs text-muted-foreground font-semibold px-6 py-4 uppercase tracking-wider">Student</th>
-                <th className="text-xs text-muted-foreground font-semibold px-4 py-4 uppercase tracking-wider hidden md:table-cell">Enrollment ID</th>
-                <th className="text-xs text-muted-foreground font-semibold px-4 py-4 uppercase tracking-wider hidden lg:table-cell">Department</th>
-                <th className="text-xs text-muted-foreground font-semibold px-4 py-4 uppercase tracking-wider">Applied</th>
-                <th className="text-xs text-muted-foreground font-semibold px-6 py-4 uppercase tracking-wider text-right">Actions</th>
+              <tr className="border-b border-gray-100">
+                <th className="text-[13px] text-gray-500 font-medium px-6 py-4">Student</th>
+                <th className="text-[13px] text-gray-500 font-medium px-4 py-4">Enrollment ID</th>
+                <th className="text-[13px] text-gray-500 font-medium px-4 py-4">Department</th>
+                <th className="text-[13px] text-gray-500 font-medium px-4 py-4">Applied</th>
+                <th className="text-[13px] text-gray-500 font-medium px-6 py-4">Actions</th>
               </tr>
             </thead>
             <AnimatePresence>
@@ -112,60 +122,68 @@ export function VerificationQueue() {
                     animate="visible"
                     exit="exit"
                     layout
-                    className="border-b border-border/50 hover:bg-muted/30 transition-colors group"
+                    className="border-b border-gray-100/70 hover:bg-gray-50/50 transition-colors group"
                   >
+                    {/* Student Column */}
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        {/* Custom Avatar without shadcn component */}
-                        <div className="w-9 h-9 rounded-full bg-primary-50 text-primary-700 flex items-center justify-center font-bold text-sm shrink-0 border border-primary-100">
+                      <div className="flex items-center gap-3.5">
+                        <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-sm shrink-0">
                           {student.initials}
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-foreground group-hover:text-primary-700 transition-colors">{student.name}</p>
-                          <p className="text-xs font-medium text-muted-foreground">{student.rollNo}</p>
+                          <p className="text-[15px] font-bold text-gray-900 leading-tight group-hover:text-primary-600 transition-colors">
+                            {student.name}
+                          </p>
+                          <p className="text-[12px] font-medium text-gray-500 mt-0.5">
+                            {student.rollNo}
+                          </p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-4 hidden md:table-cell">
-                      <span className="text-sm font-medium text-muted-foreground font-mono bg-muted px-2 py-1 rounded-md">
+
+                    {/* Enrollment ID Column */}
+                    <td className="px-4 py-4">
+                      <span className="text-[13px] text-gray-600 font-mono tracking-tight">
                         {student.enrollmentNo}
                       </span>
                     </td>
-                    <td className="px-4 py-4 hidden lg:table-cell">
-                      <span className="px-2.5 py-1 bg-muted border border-border text-muted-foreground text-xs font-medium rounded-md">
+
+                    {/* Department Column */}
+                    <td className="px-4 py-4">
+                      <span className="px-3 py-1 bg-gray-100 text-gray-600 text-[12px] font-medium rounded-full">
                         {student.department}
                       </span>
                     </td>
+
+                    {/* Applied Column */}
                     <td className="px-4 py-4">
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-                        <span className="px-2 py-0.5 bg-amber-50 text-amber-600 border border-amber-200 text-[10px] font-bold uppercase tracking-wider rounded">
+                      <div className="flex flex-row items-center gap-2.5">
+                        <span className="text-[12px] font-bold text-orange-500">
                           Pending
                         </span>
-                        <span className="text-xs font-medium text-muted-foreground hidden sm:inline">{student.appliedAt}</span>
+                        <span className="text-[13px] font-medium text-gray-500">
+                          {student.appliedAt}
+                        </span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => handleReject(student.id)}
-                          className="flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 border border-error/20 text-error hover:bg-error/10 rounded-lg text-xs font-semibold transition-colors"
-                          title="Reject"
-                        >
-                          <XCircle className="w-4 h-4" />
-                          <span className="hidden sm:inline">Reject</span>
-                        </motion.button>
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
+
+                    {/* Actions Column */}
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <button
                           onClick={() => handleApprove(student.id)}
-                          className="flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 bg-success-50 text-success-600 hover:bg-success-100 border border-success-200 rounded-lg text-xs font-semibold transition-colors"
-                          title="Approve"
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-success-200 text-success-600 hover:bg-success-50 rounded-full text-[12px] font-semibold transition-colors"
                         >
-                          <CheckCircle className="w-4 h-4" />
-                          <span className="hidden sm:inline">Approve</span>
-                        </motion.button>
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          Approve
+                        </button>
+                        <button
+                          onClick={() => handleReject(student.id)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-rose-200 text-rose-500 hover:bg-rose-50 rounded-full text-[12px] font-semibold transition-colors"
+                        >
+                          <XCircle className="w-3.5 h-3.5" />
+                          Reject
+                        </button>
                       </div>
                     </td>
                   </motion.tr>

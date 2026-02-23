@@ -8,7 +8,10 @@ const actions = [
     label: "Verify Students",
     description: "Review & approve student enrollment",
     path: "/university/dashboard/verify",
-    bgClass: "bg-primary-600 hover:bg-primary-700", // Solid Blue
+    // Bright, solid primary blue
+    bgClass: "bg-primary-500 hover:bg-primary-600 text-white shadow-sm border border-transparent",
+    iconBg: "bg-white/20 text-white",
+    badgeClass: "bg-white/20 text-white",
     isPrimary: true,
     count: "38 pending",
   },
@@ -17,7 +20,10 @@ const actions = [
     label: "Endorse Proposals",
     description: "Stamp proposals before they reach companies",
     path: "/university/dashboard/endorse",
-    bgClass: "bg-secondary-600 hover:bg-secondary-700", // Solid Purple
+    // Bright, solid secondary purple
+    bgClass: "bg-secondary-500 hover:bg-secondary-600 text-white shadow-sm border border-transparent",
+    iconBg: "bg-white/20 text-white",
+    badgeClass: "bg-white/20 text-white",
     isPrimary: true,
     count: "12 awaiting",
   },
@@ -26,7 +32,10 @@ const actions = [
     label: "Browse Projects",
     description: "Explore open company projects",
     path: "/university/dashboard/projects",
-    bgClass: "bg-card hover:bg-muted/50 border border-border", // White/Outline
+    // Clean white with soft, light border
+    bgClass: "bg-card hover:bg-gray-50/80 border border-gray-200 shadow-sm text-foreground", 
+    iconBg: "bg-gray-100 text-gray-500 group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors",
+    badgeClass: "",
     isPrimary: false,
     count: null,
   },
@@ -35,7 +44,10 @@ const actions = [
     label: "Placements Report",
     description: "View semester placement analytics",
     path: "/university/dashboard/placements",
-    bgClass: "bg-card hover:bg-muted/50 border border-border", // White/Outline
+    // Clean white with soft, light border
+    bgClass: "bg-card hover:bg-gray-50/80 border border-gray-200 shadow-sm text-foreground", 
+    iconBg: "bg-gray-100 text-gray-500 group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors",
+    badgeClass: "",
     isPrimary: false,
     count: null,
   },
@@ -54,7 +66,7 @@ export function UniQuickActions() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5"
       >
         {actions.map((action, i) => (
           <motion.div 
@@ -65,26 +77,36 @@ export function UniQuickActions() {
             className="h-full"
           >
             <Link to={action.path} className="block group h-full">
-              <div className={`relative h-full rounded-2xl p-6 transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer flex flex-col ${action.bgClass}`}>
+              <div className={`relative h-full rounded-[20px] p-6 transition-all duration-300 flex flex-col ${action.bgClass}`}>
                 
-                <div className="flex items-start justify-between mb-8">
-                  <div className={`p-3 rounded-xl ${action.isPrimary ? 'bg-white/20 text-white' : 'bg-muted text-muted-foreground group-hover:text-primary-600 transition-colors'}`}>
+                {/* Top Section: Circular Icon & Pill Badge */}
+                <div className="flex items-start justify-between mb-6">
+                  {/* Changed to rounded-full for the circular look in the design */}
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${action.iconBg}`}>
                     <action.icon className="w-5 h-5" />
                   </div>
                   {action.count && (
-                    <span className="bg-white/20 text-white text-[11px] font-semibold px-2.5 py-1 rounded-md tracking-wide">
+                    <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full tracking-wide shadow-sm ${action.badgeClass}`}>
                       {action.count}
                     </span>
                   )}
                 </div>
 
-                <p className={`font-bold text-base ${action.isPrimary ? 'text-white' : 'text-foreground'}`}>
-                  {action.label}
-                </p>
-                <p className={`text-sm mt-1 flex-1 ${action.isPrimary ? 'text-white/80' : 'text-muted-foreground'}`}>
-                  {action.description}
-                </p>
-                <ArrowRight className={`w-4 h-4 mt-4 transition-transform group-hover:translate-x-1 ${action.isPrimary ? 'text-white/70' : 'text-muted-foreground'}`} />
+                {/* Middle Section: Text */}
+                <div className="flex-1">
+                  <p className="font-bold text-[17px] tracking-tight mb-1">
+                    {action.label}
+                  </p>
+                  <p className={`text-sm leading-snug ${action.isPrimary ? 'text-white/80' : 'text-muted-foreground'}`}>
+                    {action.description}
+                  </p>
+                </div>
+
+                {/* Bottom Section: Left-aligned Arrow */}
+                <div className="mt-6">
+                  <ArrowRight className={`w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 ${action.isPrimary ? 'text-white/80' : 'text-muted-foreground group-hover:text-primary-600'}`} />
+                </div>
+                
               </div>
             </Link>
           </motion.div>
