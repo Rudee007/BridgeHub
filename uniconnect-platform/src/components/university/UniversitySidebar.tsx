@@ -9,14 +9,14 @@ import {
 
 const navItems = [
   { path: "/university/dashboard", label: "Overview", icon: LayoutDashboard },
-  { path: "/university/dashboard/verify", label: "Verify Students", icon: UserCheck },
-  { path: "/university/dashboard/endorse", label: "Endorsement Queue", icon: ClipboardCheck },
-  { path: "/university/dashboard/students", label: "My Students", icon: Users },
-  { path: "/university/dashboard/projects", label: "Active Projects", icon: Briefcase },
-  { path: "/university/dashboard/placements", label: "Placements", icon: BookOpen },
-  { path: "/university/dashboard/companies", label: "Company Partners", icon: Building2 },
-  { path: "/university/dashboard/analytics", label: "Analytics", icon: BarChart3 },
-  { path: "/university/dashboard/settings", label: "Settings", icon: Settings },
+  { path: "/university/verify", label: "Verify Students", icon: UserCheck },
+  { path: "/university/endorse", label: "Endorsement Queue", icon: ClipboardCheck },
+  { path: "/university/students", label: "My Students", icon: Users },
+  { path: "/university/projects", label: "Active Projects", icon: Briefcase },
+  { path: "/university/placements", label: "Placements", icon: BookOpen },
+  { path: "/university/companies", label: "Company Partners", icon: Building2 },
+  { path: "/university/analytics", label: "Analytics", icon: BarChart3 },
+  { path: "/university/settings", label: "Settings", icon: Settings },
 ];
 
 export function UniversitySidebar() {

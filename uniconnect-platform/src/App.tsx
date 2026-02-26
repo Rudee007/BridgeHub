@@ -37,7 +37,11 @@ import { ApplicationsPage } from '@/page/Applications/ApplicationsPage';
 
 // ✅ FIX 1: Imported without curly braces (Default Import)
 import UniversityDashboard from '@/page/University/UniversityDashboard';
-
+import { VerifyStudents } from './page/University/VerifyStudents';
+import { EndorsementPipeline } from './page/University/EndorsementPipeline';
+import { ActiveProjects } from './page/University/ActiveProjects';
+import { MyStudents } from './page/University/MyStudents';
+import { Placements } from './page/University/Placements';
 const HomePage = () => (
   <>
     <Hero />
@@ -88,6 +92,12 @@ function App() {
           <Route path="/university">
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<UniversityDashboard />} />
+            <Route path='verify' element={<VerifyStudents />} />
+            <Route path='endorse' element={<EndorsementPipeline />} />
+            <Route path='students' element={<MyStudents/>}/>
+            <Route path='projects' element={<ActiveProjects/>}/>
+            <Route path='placements' element={<Placements/>}/>
+
             {/* Future university-specific routes can be added here */}
           </Route>
 
