@@ -17,7 +17,7 @@ const initialProposals = [
     id: 2,
     studentName: "Priya Patel",
     initials: "PP",
-    projectTitle: "E-Commerce Mobile App (React Native)",
+    projectTitle: "E-Commerce Mobile App",
     company: "ShopEasy Inc.",
     submittedAt: "5 hours ago",
     skills: ["React Native", "Node.js", "Firebase"],
@@ -81,7 +81,6 @@ export function EndorsementQueue() {
         </Link>
       </div>
 
-      {/* Content Area - Scrollable on shorter screens */}
       <div className="p-6 overflow-y-auto bg-white flex-1 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200 hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
         <div className="space-y-4">
           <AnimatePresence>
@@ -94,7 +93,6 @@ export function EndorsementQueue() {
                 animate="visible"
                 exit="exit"
                 layout
-                // ✅ Inner cards: soft border-gray-200, rounded-2xl
                 className="p-5 bg-white rounded-2xl border border-gray-200 hover:border-primary-200 hover:shadow-sm transition-all duration-300 group"
               >
                 <div className="flex items-start gap-4">
@@ -110,7 +108,6 @@ export function EndorsementQueue() {
                       {proposal.projectTitle}
                     </h3>
                     
-                    {/* Sub Info: Name and Company */}
                     <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
                       <span className="text-[13px] text-gray-500 font-medium">{proposal.studentName}</span>
                       <span className="text-gray-300">·</span>
@@ -123,7 +120,6 @@ export function EndorsementQueue() {
                       <span className="text-[12px] font-medium">{proposal.submittedAt}</span>
                     </div>
 
-                    {/* Skills - Soft gray rounded pills */}
                     <div className="flex flex-wrap gap-2 mt-3.5">
                       {proposal.skills.map((skill) => (
                         <span 
@@ -135,12 +131,10 @@ export function EndorsementQueue() {
                       ))}
                     </div>
 
-                    {/* Action Buttons - Pill shaped */}
                     <div className="flex items-center gap-2.5 mt-4">
                       <motion.button
                         whileTap={{ scale: 0.96 }}
                         onClick={() => handleEndorse(proposal.id)}
-                        // ✅ Solid primary blue, rounded-full
                         className="flex items-center gap-1.5 px-4 py-1.5 bg-primary-600 hover:bg-primary-700 text-white rounded-full text-[13px] font-semibold transition-colors"
                       >
                         <CheckCircle2 className="w-4 h-4" />
@@ -162,7 +156,6 @@ export function EndorsementQueue() {
             ))}
           </AnimatePresence>
 
-          {/* Empty State */}
           {proposals.length === 0 && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
