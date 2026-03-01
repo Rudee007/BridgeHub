@@ -22,9 +22,10 @@ export function UniversityLayout({ children, universityName = "IIT Bombay" }: Un
         <UniversityHeader universityName={universityName} />
         
         {/* Scrollable Content Area */}
-        {/* We use relative positioning and a custom scrollbar for a clean look */}
-        <main className="flex-1 overflow-y-auto overflow-x-hidden relative">
-          <div className="p-4 md:p-6 lg:p-8 xl:p-10 min-h-full">
+        {/* ✅ FIXED: Applied an ultra-minimal, macOS-style frosted scrollbar */}
+        <main className="flex-1 overflow-y-auto overflow-x-hidden relative scroll-smooth [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200/60 hover:[&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
+          {/* Constraining max-width prevents ultra-wide monitors from stretching the UI too far */}
+          <div className="p-4 md:p-6 lg:p-8 xl:p-10 min-h-full max-w-[1600px] mx-auto">
             {children}
           </div>
         </main>

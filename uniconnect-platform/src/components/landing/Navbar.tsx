@@ -117,12 +117,12 @@ export const Navbar = () => {
           {/* CTA Buttons - Desktop */}
           <div className="hidden lg:flex items-center gap-3">
             {isCompaniesPage ? (
-              // ✅ ON COMPANIES PAGE - Show Login/Signup buttons
+              // ✅ ON COMPANIES PAGE - Routes to Company Auth
               <>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => navigate('/login')}
+                  onClick={() => navigate('/auth/company/login')}
                   className="px-5 py-2.5 text-gray-700 font-medium hover:text-gray-900 transition-colors"
                 >
                   Log In
@@ -130,19 +130,19 @@ export const Navbar = () => {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => navigate('/signup')}
+                  onClick={() => navigate('/auth/company/signup')}
                   className="px-5 py-2.5 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-lg hover:shadow-lg transition-all font-medium"
                 >
                   Sign Up Free
                 </motion.button>
               </>
             ) : isUniversitiesPage ? (
-              // ✅ ON UNIVERSITIES PAGE - Show Login/Get Started buttons
+              // ✅ ON UNIVERSITIES PAGE - Routes to University Auth
               <>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => navigate('/login')}
+                  onClick={() => navigate('/auth/university/login')}
                   className="px-5 py-2.5 text-gray-700 font-medium hover:text-gray-900 transition-colors"
                 >
                   Log In
@@ -150,7 +150,7 @@ export const Navbar = () => {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => navigate('/signup')}
+                  onClick={() => navigate('/auth/university/signup')}
                   className="px-5 py-2.5 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-lg hover:shadow-lg transition-all font-medium"
                 >
                   Get Started
@@ -221,11 +221,11 @@ export const Navbar = () => {
               {/* Mobile CTA Buttons */}
               <div className="flex flex-col gap-3 pt-4 border-t border-gray-100 mt-4">
                 {isCompaniesPage || isUniversitiesPage ? (
-                  // ✅ MOBILE: Login/Signup buttons
+                  // ✅ MOBILE: Routes dynamically based on which page they are on
                   <>
                     <button 
                       onClick={() => {
-                        navigate('/login');
+                        navigate(isCompaniesPage ? '/auth/company/login' : '/auth/university/login');
                         setIsMobileMenuOpen(false);
                       }}
                       className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all font-medium"
@@ -234,7 +234,7 @@ export const Navbar = () => {
                     </button>
                     <button 
                       onClick={() => {
-                        navigate('/signup');
+                        navigate(isCompaniesPage ? '/auth/company/signup' : '/auth/university/signup');
                         setIsMobileMenuOpen(false);
                       }}
                       className="w-full px-4 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-lg hover:shadow-lg transition-all font-medium"

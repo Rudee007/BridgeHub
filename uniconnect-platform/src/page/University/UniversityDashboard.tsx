@@ -1,7 +1,8 @@
-import { motion, type Variants } from "framer-motion"; // ✅ Import Variants type
+import { useState, useEffect } from "react";
+import { motion, type Variants, AnimatePresence } from "framer-motion";
 import { UniversityLayout } from "@/components/university/UniversityLayout";
 
-// Import your dashboard components
+// Import components...
 import { UniWelcomeHeader } from "@/components/university/dashboard/UniWelcomeHeader";
 import { UniKPICards } from "@/components/university/dashboard/UniKPICards";
 import { UniQuickActions } from "@/components/university/dashboard/UniQuickActions";
@@ -9,78 +10,52 @@ import { VerificationQueue } from "@/components/university/dashboard/Verificatio
 import { EndorsementQueue } from "@/components/university/dashboard/EndorsementQueue";
 import { UniActivityFeed } from "@/components/university/dashboard/UniActivityFeed";
 import { PlacementAnalytics } from "@/components/university/dashboard/PlacementAnalytics";
+import { UniOnboardingModal } from "@/components/university/dashboard/UniOnboardingModal";
 
-// ✅ Explicitly type as Variants so TypeScript knows exactly what "spring" means
 const pageVariants: Variants = {
   pageHidden: { opacity: 0 },
-  pageVisible: {
-    opacity: 1,
-    transition: { duration: 0.5, staggerChildren: 0.12 },
-  },
+  pageVisible: { opacity: 1, transition: { duration: 0.5, staggerChildren: 0.12 } },
 };
 
-// ✅ Explicitly type as Variants
 const sectionVariants: Variants = {
   pageHidden: { opacity: 0, y: 20 },
-  pageVisible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { type: "spring", stiffness: 100, damping: 20 } 
-  },
+  pageVisible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } },
 };
 
 export default function UniversityDashboard() {
   const universityName = "IIT Bombay";
+  // Default to false so it doesn't flash on screen
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  // ✅ Only show the modal if they haven't completed it before
+  useEffect(() => {
+    const isProfileComplete = localStorage.getItem("uni_profile_completed");
+    if (!isProfileComplete) {
+      setShowOnboarding(true);
+    }
+  }, []);
 
   return (
     <UniversityLayout universityName={universityName}>
-      <motion.div
-        variants={pageVariants}
-        initial="pageHidden"  
-        animate="pageVisible" 
-        className="max-w-[1400px] mx-auto space-y-8"
-      >
-        {/* 1. Welcome Header */}
-        <motion.div variants={sectionVariants}>
-          <UniWelcomeHeader universityName={universityName} />
-        </motion.div>
+      <motion.div variants={pageVariants} initial="pageHidden" animate="pageVisible" className="max-w-[1400px] mx-auto space-y-8">
+        <motion.div variants={sectionVariants}><UniWelcomeHeader universityName={universityName} /></motion.div>
+        <motion.div variants={sectionVariants}><UniKPICards /></motion.div>
+        <motion.div variants={sectionVariants}><UniQuickActions /></motion.div>
+        <motion.div variants={sectionVariants}><VerificationQueue /></motion.div>
+        <motion.div variants={sectionVariants}><EndorsementQueue /></motion.div>
 
-        {/* 2. KPI Cards */}
-        <motion.div variants={sectionVariants}>
-          <UniKPICards />
+        <motion.div variants={sectionVariants} className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+          <div className="xl:col-span-2 w-full"><UniActivityFeed /></div>
+          <div className="w-full"><PlacementAnalytics /></div>
         </motion.div>
-
-        {/* 3. Quick Actions */}
-        <motion.div variants={sectionVariants}>
-          <UniQuickActions />
-        </motion.div>
-
-        {/* 4. Verification Queue */}
-        <motion.div variants={sectionVariants}>
-          <VerificationQueue />
-        </motion.div>
-
-        {/* 5. Endorsement Queue */}
-        <motion.div variants={sectionVariants}>
-          <EndorsementQueue />
-        </motion.div>
-
-        {/* 6. Activity Feed + Placement Analytics */}
-{/* 6. Activity Feed + Placement Analytics */}
-<motion.div 
-  variants={sectionVariants} 
-  // 👇 MAKE SURE THIS SAYS items-stretch
-  className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8 items-stretch"
->
-  <div className="xl:col-span-2 w-full">
-    <UniActivityFeed />
-  </div>
-  
-  <div className="w-full">
-    <PlacementAnalytics />
-  </div>
-</motion.div>
       </motion.div>
+
+      {/* Onboarding Modal Overlay */}
+      <AnimatePresence>
+        {showOnboarding && (
+          <UniOnboardingModal onClose={() => setShowOnboarding(false)} />
+        )}
+      </AnimatePresence>
     </UniversityLayout>
   );
 }
