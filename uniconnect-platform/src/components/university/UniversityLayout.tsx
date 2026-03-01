@@ -11,7 +11,7 @@ export function UniversityLayout({ children, universityName = "IIT Bombay" }: Un
   return (
     // The main wrapper locks to the screen height to prevent full-page scrolling
     <div className="flex h-screen overflow-hidden bg-[#F8FAFC] font-sans text-gray-900">
-      
+
       {/* Fixed Sidebar */}
       <UniversitySidebar />
       

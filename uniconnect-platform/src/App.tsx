@@ -42,6 +42,9 @@ import { EndorsementPipeline } from './page/University/EndorsementPipeline';
 import { ActiveProjects } from './page/University/ActiveProjects';
 import { MyStudents } from './page/University/MyStudents';
 import { Placements } from './page/University/Placements';
+import { CompanyPartners } from './page/University/CompanyPartners';
+import { Analytics } from './page/University/Analytics';
+import { Settings } from './page/University/Settings';
 const HomePage = () => (
   <>
     <Hero />
@@ -97,8 +100,11 @@ function App() {
             <Route path='students' element={<MyStudents/>}/>
             <Route path='projects' element={<ActiveProjects/>}/>
             <Route path='placements' element={<Placements/>}/>
+            <Route path='companies' element={<CompanyPartners/>}/>
+            <Route path='analytics' element={<Analytics/>}/>
+            <Route path='settings' element={<Settings/>}/>
 
-            {/* Future university-specific routes can be added here */}
+            {/* Future u  niversity-specific routes can be added here */}
           </Route>
 
           {/* ============ REDIRECTS & 404 ============ */}
